@@ -1,0 +1,12 @@
+{
+  "original_count": 1000,
+  "result_count": 3000,
+  "processing_time": 0.06461215019226074,
+  "expansion_ratio": 3.0,
+  "reduction_factor": 333.3333333333333,
+  "data_savings_percent": 99.7,
+  "trades_per_second": 15476.965199647237,
+  "rows_per_second": 46430.89559894171,
+  "avg_quote_distance_ms": 50.858895604666664,
+  "max_quote_distance_ms": 99.980351
+}
