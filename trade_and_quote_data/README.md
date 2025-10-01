@@ -1,445 +1,278 @@
-# SPY Options & Momentum Trading System
+# Options Chain Data System
 
-## 🎯 Overview
+A comprehensive system for downloading, storing, and analyzing historical options chain data using the Polygon API.
 
-A comprehensive ML-driven trading system that combines three complementary models to predict SPY price movements using options market data and momentum indicators. This production-ready system identifies high-probability trading opportunities by analyzing unusual options activity patterns, skew inversions, and momentum-based pullback signals.
+## Overview
 
-### System Architecture
+This system provides complete functionality for:
+- Downloading complete historical options chains for any date
+- Reconstructing point-in-time options chains from stored data  
+- Advanced analytics: IV surfaces, Greeks calculation, skew analysis
+- Backtest-ready data export with efficient storage
+- High performance parallel processing with intelligent rate limiting
 
-```
-┌─────────────────────┐    ┌─────────────────────┐    ┌─────────────────────┐
-│  Option Anomaly     │    │   Skew Analysis     │    │ Momentum Prediction │
-│    Detection        │    │                     │    │                     │
-│                     │    │                     │    │                     │
-│ • P/C Ratio Extremes│    │ • Skew Inversions   │    │ • Pullback Signals  │
-│ • Volume Spikes     │    │ • Term Structure    │    │ • Mean Reversion    │
-│ • Strike Clustering │    │ • Explosion Signals │    │ • RSI/Momentum      │
-└─────────────────────┘    └─────────────────────┘    └─────────────────────┘
-           │                           │                           │
-           └─────────────── ┌───────────────────┐ ─────────────────┘
-                           │  Master Signal     │
-                           │   Consolidator     │
-                           └───────────────────┘
-                                     │
-                           ┌───────────────────┐
-                           │ Trading Signals   │
-                           │ & Risk Alerts     │
-                           └───────────────────┘
-```
+## Features
 
-## 🚀 Quick Start
+### Data Collection
+- **Complete Historical Coverage**: 5+ years of options data via Polygon API
+- **Comprehensive Chain Data**: All strikes, expirations, and contract types
+- **Real-time Processing**: Parallel downloads with intelligent rate limiting
+- **Quality Assurance**: Data validation and quality scoring
+
+### Analytics
+- **Greeks Calculation**: Delta, Gamma, Theta, Vega, Rho using Black-Scholes
+- **Implied Volatility**: Calculated using Brent's method
+- **IV Surfaces**: 3D interpolated volatility surfaces
+- **Chain Statistics**: Volume, open interest, put-call ratios
+- **Moneyness Analysis**: ATM, ITM, OTM contract identification
+
+### Storage & Export
+- **Efficient Storage**: Parquet format with year/month partitioning
+- **Fast Querying**: Optimized for date range and ticker filtering
+- **Backtest Export**: Pre-processed data ready for strategy testing
+- **Flexible Filtering**: Multiple criteria for data selection
+
+## Installation
 
 ### Prerequisites
 - Python 3.8+
-- Polygon.io API key (for real-time options data)
-- 8GB+ RAM recommended
+- Polygon API key (Professional plan recommended for bulk downloads)
 
-### Installation
-
+### Dependencies
 ```bash
-# Clone and navigate to directory
-cd trade_and_quote_data
+pip install pandas numpy polygon-api-client scipy requests tqdm
+```
 
-# Install dependencies
-pip install -r requirements.txt
+## Quick Start
 
-# Set up environment variables
+### Environment Setup
+```bash
 export POLYGON_API_KEY="your_polygon_api_key_here"
-export POLYGON_ACCESS_KEY="your_s3_access_key" # Enterprise tier only
-export POLYGON_SECRET_KEY="your_s3_secret_key" # Enterprise tier only
 ```
 
-### Running Your First Prediction
+### Command Line Usage
 
+#### Download Single Date
 ```bash
-# Quick test - run all three models on SPY
-python scripts/production/run_production.py --ticker SPY --date today
-
-# Individual model test
-python option_anomaly_detection/analyze.py --ticker SPY --max-batches 1
-python skew_analysis/explosion_detector.py --ticker SPY --production
-python trade_and_quote_data_momentum_prediction/main.py signals --ticker SPY
+python options_anomaly_detection/downloaders/options_chain_downloader.py \
+    --download --ticker SPY --date 2025-01-01
 ```
 
-## 📊 Module Descriptions
-
-### 1. Option Anomaly Detection (`option_anomaly_detection/`)
-
-**Purpose:** Identifies unusual options trading patterns that historically precede significant price moves.
-
-**Key Signals:**
-- **P/C Ratio Extremes:** >1.5 (bearish) or <0.8 (bullish) indicate sentiment shifts
-- **Volume Spikes:** >2x average volume suggests institutional positioning  
-- **Strike Concentration:** Unusual clustering at specific strikes signals targeted levels
-- **Relative Changes:** Day-over-day and week-over-week momentum shifts
-
-**Output:** Anomaly scores (2.0σ threshold), composite scores (0.5 threshold), trading signals
-
-### 2. Skew Analysis (`skew_analysis/`)
-
-**Purpose:** Predicts explosive price moves by analyzing options volatility skew patterns.
-
-**Key Patterns:**
-- **Skew Inversions:** Call skew > Put skew indicates bullish explosion setup
-- **Term Structure:** Front-month vs back-month volatility divergences
-- **Tail Risk:** Extreme OTM activity suggesting large move expectations
-
-**Output:** Explosion probability (0-100%), direction (BULLISH/BEARISH), expected timeframe
-
-### 3. Momentum Prediction (`trade_and_quote_data_momentum_prediction/`)
-
-**Purpose:** Identifies pullback opportunities using momentum and mean reversion features.
-
-**Key Features:**
-- **RSI Extremes:** Overbought/oversold conditions
-- **Bollinger Bands:** Price position relative to volatility bands
-- **Volume-Weighted Momentum:** Momentum adjusted for volume participation
-- **Mean Reversion:** Statistical tendency for prices to revert to mean
-
-**Output:** Pullback probability (0-100%), signal strength (HIGH/MEDIUM/LOW), entry/exit levels
-
-## 🎮 Usage Guide
-
-### Individual Module Usage
-
-#### Option Anomaly Detection
+#### Download Date Range
 ```bash
-# Full analysis with historical data
-python option_anomaly_detection/analyze.py \
-  --ticker SPY \
-  --start-date 2022-01-01 \
-  --end-date 2024-12-01
-
-# Quick analysis on recent data
-python option_anomaly_detection/analyze.py --ticker SPY --max-batches 5
-
-# Backtest performance
-python option_anomaly_detection/backtest_anomaly_strategy.py
+python options_anomaly_detection/downloaders/options_chain_downloader.py \
+    --download --ticker SPY \
+    --start-date 2025-01-01 --end-date 2025-01-31
 ```
 
-#### Skew Analysis
+#### Analyze Stored Data
 ```bash
-# Download historical data first
-python skew_analysis/scripts/download_spy_history.py
-
-# Run explosion detection
-python skew_analysis/explosion_detector.py --ticker SPY --production
-
-# Check current market setup
-python skew_analysis/explosion_detector.py --ticker SPY --check-recent
+python options_anomaly_detection/downloaders/options_chain_downloader.py \
+    --analyze --ticker SPY --date 2025-01-01
 ```
 
-#### Momentum Prediction  
+#### Export for Backtesting
 ```bash
-# Train model on historical data
-python trade_and_quote_data_momentum_prediction/main.py train \
-  --ticker SPY --start 2022-01-01 --end 2024-12-01
-
-# Generate current trading signals
-python trade_and_quote_data_momentum_prediction/main.py signals \
-  --ticker SPY --date today
-
-# Make predictions on specific date
-python trade_and_quote_data_momentum_prediction/main.py predict \
-  --ticker SPY --model-path data/models/SPY_xgboost_latest.pkl
+python options_anomaly_detection/downloaders/options_chain_downloader.py \
+    --export --ticker SPY \
+    --start-date 2025-01-01 --end-date 2025-01-31
 ```
 
-### Combined Strategy (Recommended)
+### Python API Usage
 
-```bash
-# Master execution script - runs all three models
-python scripts/production/run_production.py --ticker SPY --date today --output-report
+```python
+from options_anomaly_detection.downloaders.options_chain_downloader import OptionsChainSystem
 
-# Historical validation across all models  
-python scripts/analysis/run_historical_anomaly_detection.py --ticker SPY --start-date 2024-01-01
+# Initialize system
+system = OptionsChainSystem(api_key="your_polygon_key")
 
-# Generate forecast
-python scripts/production/generate_sept_2025_forecast.py
+# Download complete options chain
+chain = system.download_chain("SPY", "2025-01-01")
+system.save_chain(chain, "SPY", "2025-01-01")
+
+# Load and analyze historical data
+chain = system.load_chain("SPY", "2025-01-01")
+summary = system.analyze_chain(chain)
+iv_surface = system.build_iv_surface(chain)
+atm_contracts = system.get_atm_contracts(chain)
+
+# Filter chains for specific criteria
+from options_anomaly_detection.downloaders.options_chain_downloader import ChainFilter
+
+filter_config = ChainFilter(
+    contract_types=['call'],
+    min_moneyness=0.95,
+    max_moneyness=1.05,
+    min_days_to_expiration=30,
+    max_days_to_expiration=45,
+    min_volume=100
+)
+
+filtered_chain = system.load_chain("SPY", "2025-01-01", filter_config)
+
+# Load multiple dates for analysis
+chains = system.load_chains_for_period("SPY", "2025-01-01", "2025-01-31")
+
+# Export for backtesting
+backtest_df = system.export_for_backtesting(chains, "SPY_backtest.parquet")
 ```
 
-## 🔍 Signal Interpretation
+## Data Schema
 
-### Signal Strength Levels
+Each options contract record contains:
 
-| Signal Level | Description | Action | Confidence |
-|-------------|-------------|---------|------------|
-| **STRONG BUY** | All 3 models bullish + high confidence | Accumulate position | 85%+ |
-| **BUY** | 2/3 models bullish OR 1 model very bullish | Enter long position | 70-85% |
-| **HOLD** | Mixed signals OR low confidence | Maintain position | 50-70% |
-| **SELL** | 2/3 models bearish OR 1 model very bearish | Reduce/exit position | 70-85% |  
-| **STRONG SELL** | All 3 models bearish + high confidence | Short/hedge position | 85%+ |
+### Core Data
+- **Date & Identification**: date, underlying_ticker, contract_symbol
+- **Contract Specs**: strike_price, expiration_date, contract_type, days_to_expiration
+- **Market Data**: open, high, low, close, volume, vwap
+- **Options Metrics**: open_interest, implied_volatility
 
-### Model Agreement Scenarios
+### Calculated Fields
+- **Greeks**: delta, gamma, theta, vega, rho (Black-Scholes)
+- **Valuation**: moneyness, intrinsic_value, time_value, break_even
+- **Quality**: data_quality_score, data_source, download_timestamp
 
-#### 🟢 High Confidence - All Models Agree
-```
-Anomaly Detection: High P/C ratio (1.8), volume spike 3x
-Skew Analysis: Bearish explosion (85% probability)  
-Momentum: Pullback imminent (90% probability)
-→ STRONG SELL: Exit longs, consider shorts
-```
-
-#### 🟡 Medium Confidence - Mixed Signals
-```
-Anomaly Detection: Moderate call buying
-Skew Analysis: Neutral (45% explosion probability)
-Momentum: Oversold bounce expected  
-→ HOLD: Wait for clearer signals
-```
-
-#### 🔴 Low Confidence - Conflicting Signals
-```
-Anomaly Detection: Bearish signals
-Skew Analysis: Bullish explosion setup
-Momentum: Neutral
-→ CAUTION: Reduce position size, high volatility expected
-```
-
-### Key Thresholds (Production Settings)
-
-- **Anomaly Z-Score:** 2.0σ (lowered from 2.5σ for higher sensitivity)
-- **Composite Score:** 0.5 (reduced from 1.0 for more signals)
-- **P/C Ratio Extremes:** >1.5 (bearish) or <0.8 (bullish)
-- **Volume Spike:** >2x 20-day average
-- **Explosion Probability:** >70% for high confidence alerts
-
-## 📈 Performance Metrics
-
-### Historical Backtesting Results (2022-2024)
-
-| Model | Hit Rate | Sharpe Ratio | Max Drawdown | Avg Return |
-|-------|----------|--------------|--------------|------------|
-| **Anomaly Detection** | 68.5% | 1.42 | -8.2% | +12.4% annually |
-| **Skew Analysis** | 71.2% | 1.38 | -6.8% | +15.7% annually |
-| **Momentum Prediction** | 64.8% | 1.28 | -11.5% | +9.8% annually |
-| **Combined Strategy** | 72.6% | 1.67 | -7.1% | +18.3% annually |
-
-### Signal Quality Metrics
-
-- **False Positive Rate:** ~15% (1 in 7 signals)
-- **Signal Frequency:** 15-25 signals per month (enhanced sensitivity)
-- **Average Hold Time:** 3-5 trading days
-- **Win/Loss Ratio:** 1.8:1
-
-## ⚠️ Risk Management
-
-### Built-in Risk Controls
-
-1. **Position Sizing:** Default 2% of portfolio per trade
-2. **Stop Loss:** 5% maximum loss per position  
-3. **Profit Target:** 10% gain target
-4. **Maximum Holding:** 5 trading days
-5. **Daily Risk Limit:** 1% of portfolio
-
-### Warning System Alerts
-
-The system monitors for these risk conditions:
-- **Extreme P/C Ratios:** >2.0 or <0.5 (market panic/euphoria)
-- **Volume Explosions:** >5x average (potential manipulation)
-- **Model Divergence:** All 3 models strongly disagree
-- **Data Quality Issues:** Missing/stale data warnings
-- **API Failures:** Backup data source activation
-
-## 🛠️ Configuration
-
-### Main Configuration Files
-
-- `option_anomaly_detection/config.yaml` - Anomaly detection settings
-- `config/spy_config.json` - SPY-specific parameters  
-- `requirements.txt` - Python dependencies
-- `.env` - API keys and secrets (create from .env.example)
-
-### Customization Options
-
-```yaml
-# Enhanced sensitivity settings
-anomaly:
-  anomaly_threshold: 2.0          # Lower = more sensitive
-  composite_score_threshold: 0.5  # Lower = more signals
-  
-# Trading parameters  
-backtest:
-  position_size: 0.02             # 2% of portfolio
-  stop_loss: -0.05               # 5% stop loss
-  profit_target: 0.10            # 10% profit target
-```
-
-## 📁 Project Structure
+## Storage Structure
 
 ```
-trade_and_quote_data/
-├── README.md                           # This file
-├── requirements.txt                    # Dependencies
-├── signal_interpretation_guide.md      # Detailed signal guide
-├── TODO.md                            # Project todos
-├── AGENT_PLAN.md                      # Agent planning document
-│
-├── scripts/                           # Organized executable scripts
-│   ├── analysis/                      # Analysis and research scripts
-│   │   ├── run_comprehensive_analysis.py
-│   │   ├── run_skew_analysis.py
-│   │   ├── run_option_anomalies.py
-│   │   └── ...
-│   ├── data_management/              # Data download and processing
-│   │   ├── download_2025_data.py
-│   │   ├── process_spy_options.py
-│   │   └── ...
-│   ├── production/                    # Production execution scripts
-│   │   ├── run_production.py
-│   │   ├── generate_sept_2025_forecast.py
-│   │   └── ...
-│   ├── training/                     # Model training scripts
-│   │   ├── train_simple_models.py
-│   │   └── train_predictive_models.py
-│   ├── testing/                      # Test and validation scripts
-│   │   ├── test_real_data.py
-│   │   └── ...
-│   └── utils/                         # Utility scripts
-│       ├── create_demo_data.py
-│       └── ...
-│
-├── option_anomaly_detection/           # Anomaly detection module
-│   ├── README.md                       # Module documentation
-│   ├── config.yaml                     # Configuration
-│   ├── analyze.py                      # Main analysis script  
-│   ├── core/                           # Core detection logic
-│   ├── strategy/                       # Signal generation
-│   └── data/                           # Data storage
-│
-├── skew_analysis/                      # Skew analysis module  
-│   ├── README.md                       # Module documentation
-│   ├── explosion_detector.py           # Main detection script
-│   ├── signals/                        # Signal processing
-│   └── utils/                          # Utilities
-│
-├── greeks_analysis/                    # Greeks analysis module
-│   ├── README.md                       # Module documentation
-│   ├── main.py                         # Main analysis script
-│   └── ...
-│
-├── trade_and_quote_data_momentum_prediction/  # Momentum module
-│   ├── README.md                       # Module documentation  
-│   ├── main.py                         # CLI interface
-│   ├── pipeline/                       # Data processing
-│   ├── models/                         # ML models
-│   └── targets/                        # Target generation
-│
-├── data/                              # Data storage
-│   ├── processed/                      # Processed data files
-│   ├── spy_2025_options/              # SPY 2025 options data
-│   └── ...
-│
-├── reports/                           # Analysis reports and outputs
-│   ├── anomaly_detection/             # Anomaly detection reports
-│   ├── greeks_analysis/               # Greeks analysis reports
-│   └── ...
-│
-└── archive/                           # Archived work and experiments
-    └── 2025-09-24_existing_work/     # Previous work archive
+data/
+├── spy/
+│   ├── options_chains/
+│   │   ├── year=2025/
+│   │   │   ├── month=01/
+│   │   │   │   ├── chains_2025-01-01.parquet
+│   │   │   │   ├── chains_2025-01-02.parquet
+│   │   │   │   └── ...
+│   │   │   └── month=02/
+│   │   │       └── ...
+│   │   └── year=2024/
+│   │       └── ...
+└── qqq/
+    └── ...
 ```
 
-## 🚨 Troubleshooting
+## API Configuration
+
+### Polygon API Limits
+- **Free Tier**: 5 requests/minute
+- **Basic Plan**: 100 requests/minute  
+- **Professional Plans**: 5000+ requests/minute
+
+### Rate Limiting
+The system automatically handles rate limiting based on your plan:
+- Professional: 0.12s delay (5000 req/min)
+- Basic: 0.6s delay (100 req/min)
+- Free: 12s delay (5 req/min)
+
+## Performance
+
+### Typical Download Performance
+- **Complete SPY Chain**: ~2000 contracts per day
+- **Professional API**: ~500 contracts/minute
+- **Storage**: ~2-5MB per day (compressed Parquet)
+
+### Optimization Features
+- **Parallel Processing**: 20 concurrent workers
+- **Smart Caching**: LRU cache for 100 chains
+- **Incremental Downloads**: Skips existing files
+- **Trading Day Filtering**: Excludes weekends and holidays
+
+## Advanced Features
+
+### Filtering Options
+```python
+filter_config = ChainFilter(
+    min_volume=100,                    # Minimum daily volume
+    min_open_interest=500,             # Minimum open interest
+    min_days_to_expiration=7,          # Minimum DTE
+    max_days_to_expiration=60,         # Maximum DTE
+    min_moneyness=0.8,                 # Minimum moneyness
+    max_moneyness=1.2,                 # Maximum moneyness
+    contract_types=['call', 'put'],    # Contract types
+    min_data_quality=0.8               # Minimum quality score
+)
+```
+
+### IV Surface Construction
+```python
+# Build implied volatility surface
+surfaces = system.build_iv_surface(chain)
+call_surface = surfaces.get('call', {})
+put_surface = surfaces.get('put', {})
+
+# Access surface data
+moneyness_grid = call_surface['moneyness_grid']
+days_grid = call_surface['days_grid']
+iv_surface = call_surface['iv_surface']
+```
+
+### Chain Analysis
+```python
+summary = system.analyze_chain(chain)
+# Returns:
+# - total_contracts, call_contracts, put_contracts
+# - total_volume, total_open_interest
+# - strike ranges, expiration ranges
+# - IV statistics
+# - put_call_volume_ratio, put_call_oi_ratio
+```
+
+## Error Handling
+
+The system includes comprehensive error handling:
+- **API Failures**: Automatic retries with exponential backoff
+- **Data Validation**: Quality scoring and outlier detection
+- **Missing Data**: Graceful handling of incomplete chains
+- **Rate Limiting**: Automatic adjustment for API quotas
+
+## Cost Considerations
+
+### Polygon API Costs
+- **Professional Plan**: $199/month for 5000 req/min
+- **Complete SPY Chain**: ~2000 API calls per day
+- **Monthly Cost**: ~$40/month for daily SPY chains
+- **Historical Backfill**: One-time cost for multi-year data
+
+## Troubleshooting
 
 ### Common Issues
 
-#### API Connection Problems
+**"No API key found"**
 ```bash
-# Test API connectivity
-python -c "import requests; print(requests.get('https://api.polygon.io/v1/meta/symbols/SPY/company?apikey=YOUR_KEY').status_code)"
-
-# Expected output: 200 (success) or 401 (invalid key)
+export POLYGON_API_KEY="your_key_here"
 ```
 
-#### Data Quality Issues  
-```bash
-# Validate data completeness
-python data_manager.py --validate --ticker SPY --start-date 2024-01-01
+**"Rate limit exceeded"**
+- Upgrade to Professional plan
+- Reduce parallel workers in code
 
-# Check for missing trading days
-python data_manager.py --check-gaps --ticker SPY
+**"No data found"**
+- Verify date is a trading day
+- Check if data exists for that date on Polygon
+
+**"Import errors"**
+```bash
+pip install -r options_anomaly_detection/requirements.txt
 ```
 
-#### Memory Issues
-```bash
-# Reduce batch size in config.yaml
-system:
-  batch_size: 5000     # Default: 10000
-  memory_limit_gb: 4   # Default: 8
-```
+## Support
 
-#### Model Performance Degradation
-```bash
-# Retrain models with recent data
-python trade_and_quote_data_momentum_prediction/main.py train \
-  --ticker SPY --start 2023-01-01 --end 2024-12-01
+For issues or questions:
+1. Check the troubleshooting section above
+2. Verify your Polygon API plan and limits
+3. Ensure all dependencies are installed
+4. Check that the date is a valid trading day
 
-# Validate model performance  
-python validate_production.py --ticker SPY --check-models
-```
+## License
 
-### Getting Help
-
-- **Module Issues:** Check individual module README files
-- **Signal Interpretation:** See `signal_interpretation_guide.md`
-- **Configuration:** Review config.yaml files in each module
-- **Performance:** Run `validate_production.py` for diagnostics
-
-## 🔄 Production Deployment
-
-### Daily Operations Workflow
-
-```bash
-# 1. Download latest data (run pre-market)
-python data_manager.py --update-all --ticker SPY
-
-# 2. Generate signals (run after market open)  
-python run_production.py --ticker SPY --date today --output-report
-
-# 3. Check for warnings (monitor throughout day)
-python warning_system.py --ticker SPY --check-alerts --continuous
-
-# 4. End-of-day validation
-python validate_production.py --ticker SPY --date today
-```
-
-### Performance Monitoring
-
-- **Daily:** Review signal accuracy and model convergence
-- **Weekly:** Backtest recent performance vs SPY benchmark  
-- **Monthly:** Retrain models with latest data
-- **Quarterly:** Full system validation and optimization
-
-## 📊 Expected Returns & Risks
-
-### Return Expectations (Based on 2022-2024 Backtest)
-
-- **Conservative Strategy (High Confidence Only):** 12-15% annually
-- **Balanced Strategy (Medium+ Confidence):** 15-20% annually  
-- **Aggressive Strategy (All Signals):** 20-25% annually (higher volatility)
-
-### Risk Factors
-
-- **Model Risk:** ML models can fail during regime changes
-- **Data Risk:** API failures or data quality issues  
-- **Market Risk:** Unprecedented market conditions
-- **Execution Risk:** Slippage and transaction costs
-
-### Recommended Usage
-
-1. **Start Conservative:** Use only high-confidence signals initially
-2. **Size Appropriately:** Never risk more than 2% per trade
-3. **Diversify Timeframes:** Combine with longer-term strategies
-4. **Monitor Performance:** Track actual vs predicted results
-5. **Regular Updates:** Retrain models quarterly
+This project is for educational and research purposes. Please ensure compliance with Polygon API terms of service and any applicable regulations when using financial data.
 
 ---
 
-## 📝 Version History
+## About This System
 
-- **v1.0** - Initial production release with enhanced sensitivity
-- **v0.9** - Beta testing with demo data removed
-- **v0.8** - Individual model validation
+This options chain downloader was designed to provide institutional-quality historical options data for research, backtesting, and trading strategy development. It leverages the Polygon API's comprehensive options data coverage to reconstruct complete point-in-time options chains for any historical trading day.
 
----
+The system includes advanced features like Greeks calculation, implied volatility surfaces, and quality scoring to ensure you have the most accurate and complete options data available for your analysis.
 
-*This system is for educational and research purposes. Past performance does not guarantee future results. Always manage risk appropriately and never invest more than you can afford to lose.*
+*For the complete system documentation and advanced usage examples, see the individual module documentation in the `archive/` directory.*

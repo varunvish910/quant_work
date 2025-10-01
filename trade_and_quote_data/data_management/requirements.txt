@@ -1,5 +1,0 @@
-# PostgreSQL dependencies for SPY trades downloader
-psycopg2-binary==2.9.9
-sqlalchemy==2.0.23
-pandas==2.1.4
-pyspark==3.5.0
