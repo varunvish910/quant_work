@@ -1,278 +1,186 @@
-# Options Chain Data System
+# SPY Options Anomaly Detection System
 
-A comprehensive system for downloading, storing, and analyzing historical options chain data using the Polygon API.
+**Last Updated**: October 1, 2025  
+**Status**: Production Ready - Data Acquisition Complete
 
-## Overview
-
-This system provides complete functionality for:
-- Downloading complete historical options chains for any date
-- Reconstructing point-in-time options chains from stored data  
-- Advanced analytics: IV surfaces, Greeks calculation, skew analysis
-- Backtest-ready data export with efficient storage
-- High performance parallel processing with intelligent rate limiting
-
-## Features
-
-### Data Collection
-- **Complete Historical Coverage**: 5+ years of options data via Polygon API
-- **Comprehensive Chain Data**: All strikes, expirations, and contract types
-- **Real-time Processing**: Parallel downloads with intelligent rate limiting
-- **Quality Assurance**: Data validation and quality scoring
-
-### Analytics
-- **Greeks Calculation**: Delta, Gamma, Theta, Vega, Rho using Black-Scholes
-- **Implied Volatility**: Calculated using Brent's method
-- **IV Surfaces**: 3D interpolated volatility surfaces
-- **Chain Statistics**: Volume, open interest, put-call ratios
-- **Moneyness Analysis**: ATM, ITM, OTM contract identification
-
-### Storage & Export
-- **Efficient Storage**: Parquet format with year/month partitioning
-- **Fast Querying**: Optimized for date range and ticker filtering
-- **Backtest Export**: Pre-processed data ready for strategy testing
-- **Flexible Filtering**: Multiple criteria for data selection
-
-## Installation
-
-### Prerequisites
-- Python 3.8+
-- Polygon API key (Professional plan recommended for bulk downloads)
-
-### Dependencies
-```bash
-pip install pandas numpy polygon-api-client scipy requests tqdm
-```
-
-## Quick Start
-
-### Environment Setup
-```bash
-export POLYGON_API_KEY="your_polygon_api_key_here"
-```
-
-### Command Line Usage
-
-#### Download Single Date
-```bash
-python options_anomaly_detection/downloaders/options_chain_downloader.py \
-    --download --ticker SPY --date 2025-01-01
-```
-
-#### Download Date Range
-```bash
-python options_anomaly_detection/downloaders/options_chain_downloader.py \
-    --download --ticker SPY \
-    --start-date 2025-01-01 --end-date 2025-01-31
-```
-
-#### Analyze Stored Data
-```bash
-python options_anomaly_detection/downloaders/options_chain_downloader.py \
-    --analyze --ticker SPY --date 2025-01-01
-```
-
-#### Export for Backtesting
-```bash
-python options_anomaly_detection/downloaders/options_chain_downloader.py \
-    --export --ticker SPY \
-    --start-date 2025-01-01 --end-date 2025-01-31
-```
-
-### Python API Usage
-
-```python
-from options_anomaly_detection.downloaders.options_chain_downloader import OptionsChainSystem
-
-# Initialize system
-system = OptionsChainSystem(api_key="your_polygon_key")
-
-# Download complete options chain
-chain = system.download_chain("SPY", "2025-01-01")
-system.save_chain(chain, "SPY", "2025-01-01")
-
-# Load and analyze historical data
-chain = system.load_chain("SPY", "2025-01-01")
-summary = system.analyze_chain(chain)
-iv_surface = system.build_iv_surface(chain)
-atm_contracts = system.get_atm_contracts(chain)
-
-# Filter chains for specific criteria
-from options_anomaly_detection.downloaders.options_chain_downloader import ChainFilter
-
-filter_config = ChainFilter(
-    contract_types=['call'],
-    min_moneyness=0.95,
-    max_moneyness=1.05,
-    min_days_to_expiration=30,
-    max_days_to_expiration=45,
-    min_volume=100
-)
-
-filtered_chain = system.load_chain("SPY", "2025-01-01", filter_config)
-
-# Load multiple dates for analysis
-chains = system.load_chains_for_period("SPY", "2025-01-01", "2025-01-31")
-
-# Export for backtesting
-backtest_df = system.export_for_backtesting(chains, "SPY_backtest.parquet")
-```
-
-## Data Schema
-
-Each options contract record contains:
-
-### Core Data
-- **Date & Identification**: date, underlying_ticker, contract_symbol
-- **Contract Specs**: strike_price, expiration_date, contract_type, days_to_expiration
-- **Market Data**: open, high, low, close, volume, vwap
-- **Options Metrics**: open_interest, implied_volatility
-
-### Calculated Fields
-- **Greeks**: delta, gamma, theta, vega, rho (Black-Scholes)
-- **Valuation**: moneyness, intrinsic_value, time_value, break_even
-- **Quality**: data_quality_score, data_source, download_timestamp
-
-## Storage Structure
-
-```
-data/
-├── spy/
-│   ├── options_chains/
-│   │   ├── year=2025/
-│   │   │   ├── month=01/
-│   │   │   │   ├── chains_2025-01-01.parquet
-│   │   │   │   ├── chains_2025-01-02.parquet
-│   │   │   │   └── ...
-│   │   │   └── month=02/
-│   │   │       └── ...
-│   │   └── year=2024/
-│   │       └── ...
-└── qqq/
-    └── ...
-```
-
-## API Configuration
-
-### Polygon API Limits
-- **Free Tier**: 5 requests/minute
-- **Basic Plan**: 100 requests/minute  
-- **Professional Plans**: 5000+ requests/minute
-
-### Rate Limiting
-The system automatically handles rate limiting based on your plan:
-- Professional: 0.12s delay (5000 req/min)
-- Basic: 0.6s delay (100 req/min)
-- Free: 12s delay (5 req/min)
-
-## Performance
-
-### Typical Download Performance
-- **Complete SPY Chain**: ~2000 contracts per day
-- **Professional API**: ~500 contracts/minute
-- **Storage**: ~2-5MB per day (compressed Parquet)
-
-### Optimization Features
-- **Parallel Processing**: 20 concurrent workers
-- **Smart Caching**: LRU cache for 100 chains
-- **Incremental Downloads**: Skips existing files
-- **Trading Day Filtering**: Excludes weekends and holidays
-
-## Advanced Features
-
-### Filtering Options
-```python
-filter_config = ChainFilter(
-    min_volume=100,                    # Minimum daily volume
-    min_open_interest=500,             # Minimum open interest
-    min_days_to_expiration=7,          # Minimum DTE
-    max_days_to_expiration=60,         # Maximum DTE
-    min_moneyness=0.8,                 # Minimum moneyness
-    max_moneyness=1.2,                 # Maximum moneyness
-    contract_types=['call', 'put'],    # Contract types
-    min_data_quality=0.8               # Minimum quality score
-)
-```
-
-### IV Surface Construction
-```python
-# Build implied volatility surface
-surfaces = system.build_iv_surface(chain)
-call_surface = surfaces.get('call', {})
-put_surface = surfaces.get('put', {})
-
-# Access surface data
-moneyness_grid = call_surface['moneyness_grid']
-days_grid = call_surface['days_grid']
-iv_surface = call_surface['iv_surface']
-```
-
-### Chain Analysis
-```python
-summary = system.analyze_chain(chain)
-# Returns:
-# - total_contracts, call_contracts, put_contracts
-# - total_volume, total_open_interest
-# - strike ranges, expiration ranges
-# - IV statistics
-# - put_call_volume_ratio, put_call_oi_ratio
-```
-
-## Error Handling
-
-The system includes comprehensive error handling:
-- **API Failures**: Automatic retries with exponential backoff
-- **Data Validation**: Quality scoring and outlier detection
-- **Missing Data**: Graceful handling of incomplete chains
-- **Rate Limiting**: Automatic adjustment for API quotas
-
-## Cost Considerations
-
-### Polygon API Costs
-- **Professional Plan**: $199/month for 5000 req/min
-- **Complete SPY Chain**: ~2000 API calls per day
-- **Monthly Cost**: ~$40/month for daily SPY chains
-- **Historical Backfill**: One-time cost for multi-year data
-
-## Troubleshooting
-
-### Common Issues
-
-**"No API key found"**
-```bash
-export POLYGON_API_KEY="your_key_here"
-```
-
-**"Rate limit exceeded"**
-- Upgrade to Professional plan
-- Reduce parallel workers in code
-
-**"No data found"**
-- Verify date is a trading day
-- Check if data exists for that date on Polygon
-
-**"Import errors"**
-```bash
-pip install -r options_anomaly_detection/requirements.txt
-```
-
-## Support
-
-For issues or questions:
-1. Check the troubleshooting section above
-2. Verify your Polygon API plan and limits
-3. Ensure all dependencies are installed
-4. Check that the date is a valid trading day
-
-## License
-
-This project is for educational and research purposes. Please ensure compliance with Polygon API terms of service and any applicable regulations when using financial data.
+A comprehensive system for downloading, storing, and analyzing historical SPY options data with Open Interest proxy calculations for anomaly detection.
 
 ---
 
-## About This System
+## 🎯 Project Overview
 
-This options chain downloader was designed to provide institutional-quality historical options data for research, backtesting, and trading strategy development. It leverages the Polygon API's comprehensive options data coverage to reconstruct complete point-in-time options chains for any historical trading day.
+This system identifies unusual trading patterns in SPY options chains and generates actionable trading signals using historical data analysis and Open Interest proxy calculations.
 
-The system includes advanced features like Greeks calculation, implied volatility surfaces, and quality scoring to ensure you have the most accurate and complete options data available for your analysis.
+## 📁 **PROJECT STRUCTURE**
 
-*For the complete system documentation and advanced usage examples, see the individual module documentation in the `archive/` directory.*
+```
+/
+├── README.md                 # Main project documentation  
+├── requirements.txt          # Python dependencies
+├── scripts/                  # Standalone analysis scripts
+│   ├── hedging_activity_analyzer.py     # Hedging pattern analysis
+│   └── hedging_buildup_analysis.py      # Pre-event buildup analysis
+├── tools/                    # Core utilities
+│   ├── analyze_date.py      # Date-specific analysis tool
+│   ├── see_results.py       # Results viewer
+│   ├── validate_data.py     # Data validation utility
+│   └── download_2024.py     # Data downloader
+├── analysis/                # Organized analysis scripts
+│   ├── core_analysis/       # Main analysis engines (11 files)
+│   ├── hedging_patterns/    # Hedging-specific analysis (8 files)
+│   ├── correction_signals/  # Market correction prediction (6 files)
+│   ├── temporal_comparisons/# Date/period comparisons (6 files)
+│   ├── floor_analysis/      # Put floor analysis scripts
+│   ├── historical_studies/  # Specialized research (4 files)
+│   └── outputs/            # All CSV, PNG, and analysis output files
+├── docs/                    # Project documentation
+│   ├── TODO.md             # Development roadmap
+│   └── ACTION_PLAN.md      # Current market analysis plan
+├── data/                    # Historical options data
+├── config/                  # Configuration files
+├── options_anomaly_detection/  # ML anomaly detection engine
+│   └── target_creator.py          # Correction target labeling
+└── archive/                 # Reference implementations
+```
+
+### ✅ **COMPLETED FEATURES**
+
+1. **SPY Options Downloader** (`tools/download_2024.py`)
+   - Downloads historical SPY options data from Polygon flat files
+   - Calculates Open Interest proxy from volume and transaction data
+   - Command-line interface for easy automation
+   - Supports any date range from 2016-2025
+
+2. **Open Interest Proxy System**
+   - Uses volume, transactions, ATM bias, and DTE to estimate OI
+   - Multiple proxy versions (composite, volume-based, liquidity-based)
+   - Realistic OI values for anomaly detection
+
+3. **Data Management** (`data_management/`)
+   - Optimized options chain downloader
+   - OHLC data downloader
+   - Cache management system
+
+4. **Archive Reference** (`archive/`)
+   - Complete proven anomaly detection system
+   - Backtesting framework
+   - Analysis tools and visualizations
+
+---
+
+## 🚀 Quick Start
+
+### Download SPY Options Data
+
+```bash
+# Download January 2016
+python3 archive/spy_options_downloader.py 2016-01-01 2016-01-31
+
+# Download any date range
+python3 archive/spy_options_downloader.py 2020-01-01 2020-12-31
+
+# Save individual date files too
+python3 archive/spy_options_downloader.py 2016-01-01 2016-01-31 --individual
+```
+
+### Data Output
+
+The downloader creates Parquet files with:
+- **Contract details**: ticker, strike, expiration, DTE, option type
+- **Market data**: OHLC, volume, transactions, VWAP
+- **OI Proxy**: Multiple versions calculated from volume/transactions
+- **Analysis features**: moneyness, ATM score, liquidity score
+
+---
+
+## 📊 Data Validation (January 2016)
+
+- **36,413 contracts** across 19 trading days
+- **Date range**: 2016-01-04 to 2016-01-29
+- **Strike range**: $10 to $320
+- **DTE range**: 0 to 1,082 days
+- **Calls**: 15,341 | **Puts**: 21,072
+- **OI Proxy range**: 537 to 8,905 (realistic values)
+
+---
+
+## 🏗️ System Architecture
+
+```
+trade_and_quote_data/
+├── archive/                       # Reference implementations
+│   └── spy_options_downloader.py # Main downloader tool
+├── data_management/               # Core data processing
+│   ├── options_chain_downloader.py
+│   ├── ohlc_data_downloader.py
+│   └── cache_manager.py
+├── options_anomaly_detection/     # Analysis framework
+├── data/                         # Downloaded datasets
+│   └── spy_options/              # SPY options data with OI proxy
+├── TODO.md                       # Development roadmap
+└── README.md                     # This file
+```
+
+---
+
+## 🔧 Technical Details
+
+### Open Interest Proxy Calculation
+
+The system calculates OI proxy using:
+- **Volume** (30% weight) - Primary indicator of activity
+- **Transactions** (20% weight) - Indicates institutional activity
+- **Liquidity Score** (20% weight) - sqrt(volume × transactions)
+- **ATM Score** (20% weight) - Favors at-the-money options
+- **DTE Weight** (10% weight) - Longer-dated options accumulate more OI
+
+### Data Sources
+
+- **Polygon Flat Files**: Historical OHLCV data (2014-2025)
+- **No API Rate Limits**: Uses bulk flat file downloads
+- **Comprehensive Coverage**: All SPY options contracts
+
+---
+
+## 📈 Next Steps
+
+1. **Expand Historical Dataset**: Download 2016-2025 data
+2. **Anomaly Detection**: Implement pattern recognition algorithms
+3. **Signal Generation**: Create trading signals from anomalies
+4. **Backtesting**: Validate signals against historical performance
+5. **Real-time Monitoring**: Live anomaly detection system
+
+---
+
+## 🛠️ Development
+
+### Requirements
+
+- Python 3.8+
+- pandas, numpy
+- AWS CLI (for Polygon flat files)
+- Polygon API credentials
+
+### Setup
+
+```bash
+# Install dependencies
+pip install pandas numpy
+
+# Configure AWS credentials for Polygon
+export AWS_ACCESS_KEY_ID="your_polygon_aws_key"
+export AWS_SECRET_ACCESS_KEY="your_polygon_aws_secret"
+```
+
+---
+
+## 📝 Notes
+
+- **Historical OI Limitation**: Polygon flat files don't include historical Open Interest
+- **Proxy Solution**: OI proxy provides realistic estimates for anomaly detection
+- **Data Quality**: Validated against known market patterns and volume distributions
+- **Scalability**: Designed to handle multi-year datasets efficiently
+
+---
+
+*This system provides a solid foundation for options anomaly detection with realistic OI proxy calculations and comprehensive historical data coverage.*

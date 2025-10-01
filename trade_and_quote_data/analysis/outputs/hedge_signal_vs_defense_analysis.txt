@@ -1,0 +1,27 @@
+🎯 HEDGE SIGNAL VS DEFENSE ANALYSIS
+==================================================
+
+❓ KEY QUESTION:
+Does hedging data predict 'market will pull back'?
+OR does it just show 'if pullback happens, X level is defended'?
+
+📊 SIGNAL FREQUENCY ANALYSIS:
+  • Prediction signals: 0.0% of days
+  • Defense signals: 0.0% of days
+
+⚠️  CONCLUSION: More PREDICTION signals than DEFENSE signals
+   → Data may predict pullbacks
+🏛️  INSTITUTIONAL POSITIONING:
+  • Average institutional ratio: 80.1%
+  • High institutional days: 55.9%
+
+✅ High institutional dominance = DEFENSE positioning
+   → Institutions are hedging, not predicting
+🎯 FINAL ANSWER:
+--------------------
+⚠️  The data shows some PREDICTION signals
+
+What it tells us:
+• Some institutional positioning may predict pullbacks
+• Defense levels are still the primary signal
+• Mixed prediction/defense signals

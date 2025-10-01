@@ -1,0 +1,91 @@
+📊 SEPTEMBER 2025 vs SUMMER 2025 COMPARISON
+============================================================
+
+📈 OVERALL SUMMARY:
+------------------
+• June 2025: 20 trading days
+• July 2025: 22 trading days
+• August 2025: 21 trading days
+• September 2025: 21 trading days
+• Summer 2025 Total: 63 trading days
+
+🔍 KEY METRICS COMPARISON:
+-------------------------
+September 2025 vs Summer 2025 Average
+
+📊 Hedging Intensity:
+  • Summer: 0.235
+  • September: 0.206
+  • Change: -0.030 (-12.6%)
+
+📊 Put/Call Ratio:
+  • Summer: 1.118
+  • September: 1.103
+  • Change: -0.015 (-1.3%)
+
+📊 Institutional %:
+  • Summer: 80.3%
+  • September: 78.4%
+  • Change: -2.0% (-2.4%)
+
+📊 Defensive Positioning:
+  • Summer: 0.688
+  • September: 0.650
+  • Change: -0.038 (-5.5%)
+
+📊 Volume/OI Ratio:
+  • Summer: 1.029
+  • September: 1.013
+  • Change: -0.016 (-1.6%)
+
+📊 Total Put OI:
+  • Summer: 4,221,675
+  • September: 4,469,208
+  • Change: +247,533 (+5.9%)
+
+📅 MONTHLY BREAKDOWN:
+--------------------
+
+June 2025:
+  • Hedging Intensity: 0.244
+  • P/C Ratio: 1.122
+  • Institutional %: 80.3%
+  • Defensive Positioning: 0.654
+  • Volume/OI Ratio: 1.060
+  • Total Put OI: 4,429,789
+
+July 2025:
+  • Hedging Intensity: 0.273
+  • P/C Ratio: 1.136
+  • Institutional %: 80.6%
+  • Defensive Positioning: 0.701
+  • Volume/OI Ratio: 0.977
+  • Total Put OI: 4,212,909
+
+August 2025:
+  • Hedging Intensity: 0.188
+  • P/C Ratio: 1.094
+  • Institutional %: 80.1%
+  • Defensive Positioning: 0.707
+  • Volume/OI Ratio: 1.055
+  • Total Put OI: 4,032,656
+
+September 2025:
+  • Hedging Intensity: 0.206
+  • P/C Ratio: 1.103
+  • Institutional %: 78.4%
+  • Defensive Positioning: 0.650
+  • Volume/OI Ratio: 1.013
+  • Total Put OI: 4,469,208
+
+🎯 KEY FINDINGS:
+---------------
+✅ SIGNIFICANT CHANGES DETECTED:
+  • Hedging Intensity: -12.6%
+
+💡 CONCLUSION:
+------------
+✅ SEPTEMBER SHOWS DECREASED HEDGING ACTIVITY
+• Options market became less defensive
+• May indicate reduced risk concerns
+• More optimistic positioning

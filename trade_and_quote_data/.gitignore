@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data directories (keep structure but ignore data files)
+data/
+!data/.gitkeep
+
+# Archive (if not needed in repo)
+archive/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# API keys and secrets
+.env.local
+.env.production
+secrets.json
+config/secrets.py
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Test outputs
+test_output/
+*.csv
+*.parquet
+*.pickle

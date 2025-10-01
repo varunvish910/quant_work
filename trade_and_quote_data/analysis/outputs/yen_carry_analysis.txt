@@ -1,0 +1,28 @@
+🇯🇵 YEN CARRY TRADE ANALYSIS
+========================================
+Total Events: 47
+
+📊 Momentum Spike: 47 events
+  • 2025-07-16: Momentum spike: 20.0
+  • 2025-07-22: Momentum spike: 20.0
+  • 2025-08-07: Momentum spike: 20.0
+  • 2025-08-22: Momentum spike: 20.0
+  • 2025-09-26: Momentum spike: 20.0
+
+📈 RECENT YEN CARRY ACTIVITY (2025):
+------------------------------
+• 2025-01-31: Momentum spike: 20.0
+• 2025-02-18: Momentum spike: 20.0
+• 2025-02-27: Momentum spike: 20.0
+• 2025-03-03: Momentum spike: 20.0
+• 2025-04-03: Momentum spike: 20.0
+• 2025-04-08: Momentum spike: 20.0
+• 2025-04-16: Momentum spike: 20.0
+• 2025-05-21: Momentum spike: 20.0
+• 2025-07-09: Momentum spike: 20.0
+• 2025-07-14: Momentum spike: 20.0
+• 2025-07-16: Momentum spike: 20.0
+• 2025-07-22: Momentum spike: 20.0
+• 2025-08-07: Momentum spike: 20.0
+• 2025-08-22: Momentum spike: 20.0
+• 2025-09-26: Momentum spike: 20.0

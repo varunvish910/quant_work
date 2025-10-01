@@ -1,0 +1,81 @@
+================================================================================
+SPY HEDGING PATTERNS: JULY/AUGUST 2025 vs SEPTEMBER 2025
+================================================================================
+Analysis Date: 2025-10-01 10:52:57
+
+📊 PERIOD SUMMARIES:
+--------------------
+July/August 2025: 43 trading days
+September 2025: 21 trading days
+July/August SPY: $633.31 avg ($617.65 - 648.92)
+September SPY: $656.84 avg ($640.27 - 666.84)
+
+🔍 KEY DIFFERENCES:
+--------------------
+
+📈 DETAILED METRICS COMPARISON:
+-----------------------------------
+
+Deep OTM Put OI:
+  July/August: 699812.039
+  September:   681094.561
+  Change:      -2.7%
+
+Deep OTM V/OI Ratio:
+  July/August: 0.162
+  September:   0.155
+  Change:      -3.9%
+
+Overall Put V/OI Ratio:
+  July/August: 1.015
+  September:   1.013
+  Change:      -0.2%
+
+Put/Call Ratio (OI):
+  July/August: 1.116
+  September:   1.103
+  Change:      -1.2%
+
+Long-dated Options %:
+  July/August: 0.433
+  September:   0.396
+  Change:      -8.7%
+
+Top 5 Strikes %:
+  July/August: 0.008
+  September:   0.007
+  Change:      -5.5%
+
+Max Single Strike %:
+  July/August: 0.002
+  September:   0.002
+  Change:      -5.2%
+
+5-10% OTM %:
+  July/August: 0.166
+  September:   0.185
+  Change:      +11.4%
+
+10-20% OTM %:
+  July/August: 0.163
+  September:   0.163
+  Change:      -0.2%
+
+Deep OTM %:
+  July/August: 0.169
+  September:   0.153
+  Change:      -9.9%
+
+💡 WHAT THIS MEANS:
+------------------
+No dramatic changes detected between periods
+
+⚠️  RISK ASSESSMENT:
+--------------------
+Current concerns in September:
+• Strong institutional hedging present
+
+🎯 CONCLUSION:
+---------------
+September shows MINIMAL changes in hedging patterns
+compared to July/August, suggesting similar market conditions

@@ -1,0 +1,103 @@
+📊 SUMMER 2025 HEDGING ANALYSIS REPORT
+============================================================
+
+📈 OVERALL SUMMARY:
+------------------
+• Total Trading Days: 63
+• June 2025: 20 days
+• July 2025: 22 days
+• August 2025: 21 days
+
+📊 MONTHLY HEDGING STATISTICS:
+------------------------------
+
+June 2025:
+  • Avg Hedging Intensity: 0.244
+  • Max Hedging Intensity: 0.371
+  • Avg P/C Ratio: 1.122
+  • Max P/C Ratio: 1.186
+  • Avg Institutional %: 80.3%
+  • Avg Defensive Positioning: 0.654
+  • Avg Put OI: 4,429,789
+
+July 2025:
+  • Avg Hedging Intensity: 0.273
+  • Max Hedging Intensity: 0.409
+  • Avg P/C Ratio: 1.136
+  • Max P/C Ratio: 1.205
+  • Avg Institutional %: 80.6%
+  • Avg Defensive Positioning: 0.701
+  • Avg Put OI: 4,212,909
+
+August 2025:
+  • Avg Hedging Intensity: 0.188
+  • Max Hedging Intensity: 0.262
+  • Avg P/C Ratio: 1.094
+  • Max P/C Ratio: 1.131
+  • Avg Institutional %: 80.1%
+  • Avg Defensive Positioning: 0.707
+  • Avg Put OI: 4,032,656
+
+📈 MONTHLY RISES ANALYSIS:
+-------------------------
+(First half vs Second half of each month)
+
+June 2025 Rises:
+  • Hedging Intensity: +0.017
+  • P/C Ratio: +0.008
+  • Institutional %: -0.4%
+  • Defensive Positioning: +0.072
+  • Put OI Change: -4.5%
+
+July 2025 Rises:
+  • Hedging Intensity: +0.061
+  • P/C Ratio: +0.030
+  • Institutional %: -1.3%
+  • Defensive Positioning: +0.009
+  • Put OI Change: -1.2%
+
+August 2025 Rises:
+  • Hedging Intensity: -0.035
+  • P/C Ratio: -0.017
+  • Institutional %: -0.5%
+  • Defensive Positioning: -0.020
+  • Put OI Change: -7.2%
+
+🚨 SIGNIFICANT SPIKES:
+--------------------
+
+June 2025 Spikes:
+  • Hedging Intensity Spikes: 1
+  • P/C Ratio Spikes: 1
+  • Institutional Spikes: 1
+  • Defensive Spikes: 0
+    Hedging spike dates: 06/25
+    P/C spike dates: 06/25
+
+July 2025 Spikes:
+  • Hedging Intensity Spikes: 2
+  • P/C Ratio Spikes: 2
+  • Institutional Spikes: 1
+  • Defensive Spikes: 2
+    Hedging spike dates: 07/23, 07/24
+    P/C spike dates: 07/23, 07/24
+
+August 2025 Spikes:
+  • Hedging Intensity Spikes: 0
+  • P/C Ratio Spikes: 0
+  • Institutional Spikes: 0
+  • Defensive Spikes: 1
+
+🎯 KEY FINDINGS:
+---------------
+ℹ️  NO SIGNIFICANT RISES DETECTED
+  • Hedging activity remained relatively stable
+  • No major spikes in defensive positioning
+  • Normal institutional hedging patterns
+
+💡 CONCLUSION:
+------------
+✅ HEDGING ACTIVITY REMAINED STABLE DURING SUMMER 2025
+• No significant rises in defensive positioning
+• Normal institutional hedging behavior
+• No indication of elevated risk concerns

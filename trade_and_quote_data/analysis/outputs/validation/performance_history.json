@@ -1,0 +1,74 @@
+[
+  {
+    "timestamp": "2025-10-01T15:56:04.810726",
+    "model_name": "random_forest",
+    "metrics": {
+      "accuracy": 0.9937888198757764,
+      "precision": 0.8709677419354839,
+      "recall": 0.7941176470588235,
+      "f1": 0.8307692307692308,
+      "auc": 0.9572792847709032,
+      "true_positives": 27,
+      "false_positives": 4,
+      "true_negatives": 1733,
+      "false_negatives": 7,
+      "specificity": 0.9976971790443293,
+      "false_positive_rate": 0.002302820955670697,
+      "false_negative_rate": 0.20588235294117646
+    }
+  },
+  {
+    "timestamp": "2025-10-01T15:56:05.192303",
+    "model_name": "svm",
+    "metrics": {
+      "accuracy": 0.7701863354037267,
+      "precision": 0.07126436781609195,
+      "recall": 0.9117647058823529,
+      "f1": 0.13219616204690832,
+      "auc": 0.9128145213180263,
+      "true_positives": 31,
+      "false_positives": 404,
+      "true_negatives": 1333,
+      "false_negatives": 3,
+      "specificity": 0.7674150834772596,
+      "false_positive_rate": 0.23258491652274035,
+      "false_negative_rate": 0.08823529411764706
+    }
+  },
+  {
+    "timestamp": "2025-10-01T15:56:05.518604",
+    "model_name": "isolation_forest",
+    "metrics": {
+      "accuracy": 0.019198193111236588,
+      "precision": 0.019198193111236588,
+      "recall": 1.0,
+      "f1": 0.037673130193905814,
+      "auc": 0.4606827186833282,
+      "true_positives": 34,
+      "false_positives": 1737,
+      "true_negatives": 0,
+      "false_negatives": 0,
+      "specificity": 0.0,
+      "false_positive_rate": 1.0,
+      "false_negative_rate": 0.0
+    }
+  },
+  {
+    "timestamp": "2025-10-01T15:56:05.553900",
+    "model_name": "one_class_svm",
+    "metrics": {
+      "accuracy": 0.019198193111236588,
+      "precision": 0.019198193111236588,
+      "recall": 1.0,
+      "f1": 0.037673130193905814,
+      "auc": 0.44185377086931493,
+      "true_positives": 34,
+      "false_positives": 1737,
+      "true_negatives": 0,
+      "false_negatives": 0,
+      "specificity": 0.0,
+      "false_positive_rate": 1.0,
+      "false_negative_rate": 0.0
+    }
+  }
+]

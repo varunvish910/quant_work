@@ -1,0 +1,50 @@
+🔄 INSTITUTIONAL HEDGE ROLLING ANALYSIS
+==================================================
+
+🎯 DOMINANT HEDGE LEVEL: 5% Below
+   Average OI: 946,000
+
+📊 10% BELOW HEDGE ANALYSIS:
+   Rolling Correlation with SPY: -0.036
+   OI Consistency Score: 0.851
+   ✅ LOW CORRELATION = Rolling hedge behavior
+   ✅ HIGH CONSISTENCY = Systematic rolling
+
+📈 HEDGE LEVEL CORRELATIONS WITH SPY:
+----------------------------------------
+5% Below:
+  OI Correlation: 0.236
+  % Correlation: 0.076
+  Avg OI: 946,000
+  Avg %: 22.3%
+
+10% Below:
+  OI Correlation: 0.014
+  % Correlation: -0.127
+  Avg OI: 533,841
+  Avg %: 12.5%
+
+15% Below:
+  OI Correlation: 0.093
+  % Correlation: 0.022
+  Avg OI: 331,349
+  Avg %: 7.7%
+
+20% Below:
+  OI Correlation: 0.330
+  % Correlation: 0.433
+  Avg OI: 217,481
+  Avg %: 5.1%
+
+25% Below:
+  OI Correlation: 0.330
+  % Correlation: 0.445
+  Avg OI: 152,693
+  Avg %: 3.5%
+
+🎯 ROLLING BEHAVIOR CONCLUSION:
+------------------------------
+✅ INSTITUTIONS ARE ROLLING 10% HEDGES
+   - Low correlation with SPY price
+   - High consistency in OI levels
+   - Systematic downside protection
