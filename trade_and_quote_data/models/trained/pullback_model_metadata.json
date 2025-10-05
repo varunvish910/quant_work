@@ -1,0 +1,195 @@
+{
+  "model_type": "pullback_4pct_ensemble",
+  "created_at": "2025-10-04T22:44:50.063355",
+  "feature_count": 40,
+  "target_config": {
+    "threshold": 0.04,
+    "lookforward_days": 7,
+    "min_warning_days": 5,
+    "max_warning_days": 7,
+    "description": "4% pullback within 5-7 days",
+    "expected_frequency": "6-8 times per year",
+    "target_type": "pullback_5to7_days"
+  },
+  "performance": {
+    "val_precision": 0.0,
+    "val_recall": 0.0,
+    "val_f1": 0.0,
+    "val_auc": 0.4699772801038624,
+    "test_precision": 0.0,
+    "test_recall": 0.0,
+    "test_f1": 0.0,
+    "test_auc": 0.4268292682926829,
+    "feature_importance": [
+      {
+        "feature": "vol_mean_reversion",
+        "importance": 0.09994286948806777
+      },
+      {
+        "feature": "trend_strength",
+        "importance": 0.05473030475010115
+      },
+      {
+        "feature": "vix_spike",
+        "importance": 0.04814491768509234
+      },
+      {
+        "feature": "price_vs_sma50",
+        "importance": 0.04654440032346932
+      },
+      {
+        "feature": "vix_momentum_10d",
+        "importance": 0.04231972941516802
+      },
+      {
+        "feature": "vix_percentile_252d",
+        "importance": 0.03601533177937053
+      },
+      {
+        "feature": "vvix_momentum_5d",
+        "importance": 0.031462823701064235
+      },
+      {
+        "feature": "vix_vs_ma20",
+        "importance": 0.031138303998273727
+      },
+      {
+        "feature": "vol_regime_transition",
+        "importance": 0.030197259670421268
+      },
+      {
+        "feature": "price_momentum_divergence",
+        "importance": 0.02733761004868472
+      },
+      {
+        "feature": "vol_risk_premium",
+        "importance": 0.027336588219943708
+      },
+      {
+        "feature": "sector_participation",
+        "importance": 0.026382058433359078
+      },
+      {
+        "feature": "volume_sma_ratio",
+        "importance": 0.026049887478512057
+      },
+      {
+        "feature": "return_50d",
+        "importance": 0.022506748879503147
+      },
+      {
+        "feature": "vix_level",
+        "importance": 0.022424687374954004
+      },
+      {
+        "feature": "price_vs_sma200",
+        "importance": 0.02193923313865504
+      },
+      {
+        "feature": "realized_vol_5d",
+        "importance": 0.02173825245038391
+      },
+      {
+        "feature": "vix_regime",
+        "importance": 0.02099580925259699
+      },
+      {
+        "feature": "usdjpy_volatility",
+        "importance": 0.020803077824629618
+      },
+      {
+        "feature": "volatility_20d",
+        "importance": 0.02047658975353254
+      },
+      {
+        "feature": "return_20d",
+        "importance": 0.020085864501503584
+      },
+      {
+        "feature": "atr_14",
+        "importance": 0.020000617361724843
+      },
+      {
+        "feature": "risk_appetite",
+        "importance": 0.019523315155220936
+      },
+      {
+        "feature": "vix_extreme_high",
+        "importance": 0.01948934617505267
+      },
+      {
+        "feature": "price_vs_sma20",
+        "importance": 0.018756830549068695
+      },
+      {
+        "feature": "currency_stress_composite",
+        "importance": 0.018621386013601797
+      },
+      {
+        "feature": "vix_term_structure",
+        "importance": 0.018455377466174008
+      },
+      {
+        "feature": "rsi_14",
+        "importance": 0.018396411660104115
+      },
+      {
+        "feature": "vix_momentum_5d",
+        "importance": 0.016607063122945954
+      },
+      {
+        "feature": "market_fragmentation",
+        "importance": 0.016249632003774543
+      },
+      {
+        "feature": "vix_backwardation",
+        "importance": 0.016202732477405883
+      },
+      {
+        "feature": "vol_acceleration",
+        "importance": 0.015583988623651119
+      },
+      {
+        "feature": "vix_vs_realized",
+        "importance": 0.01534104886078783
+      },
+      {
+        "feature": "return_5d",
+        "importance": 0.01526054446227589
+      },
+      {
+        "feature": "vvix_level",
+        "importance": 0.014693888908196888
+      },
+      {
+        "feature": "fx_regime_change",
+        "importance": 0.013251755928676359
+      },
+      {
+        "feature": "market_breadth",
+        "importance": 0.012493186492809474
+      },
+      {
+        "feature": "vol_persistence",
+        "importance": 0.012152751647171306
+      },
+      {
+        "feature": "realized_vol_20d",
+        "importance": 0.010887527874242926
+      },
+      {
+        "feature": "usdjpy_momentum_10d",
+        "importance": 0.00946024704982813
+      }
+    ],
+    "currency_importance": 0.04888471088805954
+  },
+  "description": "4% pullback detection (realistic threshold)",
+  "anti_overfitting": {
+    "currency_weight_reduced": true,
+    "conservative_params": true,
+    "balanced_stress_factors": true,
+    "general_patterns": true
+  },
+  "focus": "General market stress patterns, not event-specific"
+}

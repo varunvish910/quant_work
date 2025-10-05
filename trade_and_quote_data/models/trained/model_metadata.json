@@ -1,0 +1,9 @@
+{
+  "model_type": "ensemble",
+  "created_at": "2025-10-04T13:56:14.020049",
+  "training_config": {},
+  "feature_count": 32,
+  "training_samples": 5767,
+  "positive_rate": 0.22247268943991677,
+  "trained_at": "2025-10-04T13:56:14.721981"
+}

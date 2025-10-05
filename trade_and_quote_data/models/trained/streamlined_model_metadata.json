@@ -1,0 +1,200 @@
+{
+  "model_type": "streamlined_ensemble",
+  "created_at": "2025-10-04T22:31:29.770223",
+  "feature_count": 45,
+  "performance": {
+    "val_precision": 0.9565217391304348,
+    "val_recall": 1.0,
+    "val_f1": 0.9777777777777777,
+    "val_auc": 1.0,
+    "test_precision": 0.95,
+    "test_recall": 1.0,
+    "test_f1": 0.9743589743589743,
+    "test_auc": 1.0,
+    "feature_importance": [
+      {
+        "feature": "realized_vol_20d",
+        "importance": 0.5318295487998239
+      },
+      {
+        "feature": "vix_vs_ma20",
+        "importance": 0.02714192811819368
+      },
+      {
+        "feature": "vix_spike",
+        "importance": 0.02124425039572543
+      },
+      {
+        "feature": "usdjpy_momentum_10d",
+        "importance": 0.019896360710375944
+      },
+      {
+        "feature": "sector_momentum_divergence",
+        "importance": 0.018701001682678936
+      },
+      {
+        "feature": "usdjpy_acceleration_5d",
+        "importance": 0.01821903942531883
+      },
+      {
+        "feature": "vix_momentum_10d",
+        "importance": 0.015904995309593932
+      },
+      {
+        "feature": "financials_weakness",
+        "importance": 0.01370984982234339
+      },
+      {
+        "feature": "sector_dispersion",
+        "importance": 0.01345644067864523
+      },
+      {
+        "feature": "vix_level",
+        "importance": 0.013171994199699564
+      },
+      {
+        "feature": "vix_vs_realized",
+        "importance": 0.012360451545704499
+      },
+      {
+        "feature": "currency_stress_composite",
+        "importance": 0.01178833870589971
+      },
+      {
+        "feature": "price_momentum_5d",
+        "importance": 0.011679262255122272
+      },
+      {
+        "feature": "volume_sma_ratio",
+        "importance": 0.011618333727331604
+      },
+      {
+        "feature": "atr_14",
+        "importance": 0.011461628273842726
+      },
+      {
+        "feature": "fx_regime_change",
+        "importance": 0.011276796032152748
+      },
+      {
+        "feature": "risk_on_off_ratio",
+        "importance": 0.011222128686883189
+      },
+      {
+        "feature": "usdjpy_level",
+        "importance": 0.01019741768110416
+      },
+      {
+        "feature": "vol_persistence",
+        "importance": 0.010102367185504637
+      },
+      {
+        "feature": "vol_regime_transition",
+        "importance": 0.009908748172332744
+      },
+      {
+        "feature": "vol_risk_premium",
+        "importance": 0.00988634193982495
+      },
+      {
+        "feature": "vol_mean_reversion",
+        "importance": 0.009808843472843259
+      },
+      {
+        "feature": "return_50d",
+        "importance": 0.009648385986274436
+      },
+      {
+        "feature": "vvix_level",
+        "importance": 0.009648328420382537
+      },
+      {
+        "feature": "vix_term_structure",
+        "importance": 0.009503410327054007
+      },
+      {
+        "feature": "defensive_vs_growth",
+        "importance": 0.009321910127552333
+      },
+      {
+        "feature": "vix_momentum_5d",
+        "importance": 0.008725344143141354
+      },
+      {
+        "feature": "vix_extreme_high",
+        "importance": 0.008642725752997883
+      },
+      {
+        "feature": "usdjpy_volatility",
+        "importance": 0.00820001386697416
+      },
+      {
+        "feature": "price_vs_sma200",
+        "importance": 0.007977365856633141
+      },
+      {
+        "feature": "yen_carry_unwind_risk",
+        "importance": 0.007974741130719382
+      },
+      {
+        "feature": "vol_acceleration",
+        "importance": 0.007943888239020513
+      },
+      {
+        "feature": "tech_resilience",
+        "importance": 0.007865321430518973
+      },
+      {
+        "feature": "volatility_20d",
+        "importance": 0.007792454640346923
+      },
+      {
+        "feature": "utilities_outperformance",
+        "importance": 0.007724050489007206
+      },
+      {
+        "feature": "vix_backwardation",
+        "importance": 0.007627780746631222
+      },
+      {
+        "feature": "vix_percentile_252d",
+        "importance": 0.007513880152705844
+      },
+      {
+        "feature": "staples_vs_discretionary",
+        "importance": 0.006972187191020933
+      },
+      {
+        "feature": "vvix_momentum_5d",
+        "importance": 0.006953616859371134
+      },
+      {
+        "feature": "rsi_14",
+        "importance": 0.006808944180431723
+      },
+      {
+        "feature": "usdjpy_momentum_5d",
+        "importance": 0.006705808607702197
+      },
+      {
+        "feature": "price_vs_sma50",
+        "importance": 0.0066631115737249055
+      },
+      {
+        "feature": "realized_vol_5d",
+        "importance": 0.0052668202731671245
+      },
+      {
+        "feature": "healthcare_strength",
+        "importance": 0.005205743624548421
+      },
+      {
+        "feature": "vix_regime",
+        "importance": 0.004728099559128449
+      }
+    ]
+  },
+  "description": "Streamlined model with fast-moving features only",
+  "removed_features": "Slow macro indicators (Fed policy, economic trends, etc.)",
+  "focus": "3-13 day early warning signals"
+}
