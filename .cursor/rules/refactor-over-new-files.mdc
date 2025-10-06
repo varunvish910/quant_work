@@ -1,0 +1,78 @@
+---
+alwaysApply: true
+description: Encourages refactoring existing code instead of creating new files
+---
+
+# Code Organization: Refactor Over Create
+
+## Primary Principle
+**ALWAYS prefer refactoring existing files over creating new ones.**
+
+## Guidelines
+
+### Before Creating a New File, Ask:
+1. Can this logic be added to an existing file?
+2. Can an existing file be refactored to support this functionality?
+3. Is there a similar file that could be generalized?
+4. Would this create unnecessary duplication?
+
+### When to Create New Files
+Only create new files when:
+- The functionality is completely orthogonal to existing code
+- Adding to existing files would violate single responsibility
+- The file serves as a clear, distinct entry point (e.g., `train_final_model.py`)
+- Creating a reusable module/utility that multiple files will import
+
+### Refactoring Strategies
+1. **Consolidate similar scripts** into parameterized versions
+2. **Extract common logic** into shared utility modules
+3. **Enhance existing entry points** with command-line arguments
+4. **Use configuration files** instead of separate scripts with hardcoded values
+
+### Example: DON'T Do This
+```python
+# train_model_2020.py
+# train_model_2021.py  
+# train_model_2022.py
+# (3 separate files with 90% duplicate code)
+```
+
+### Example: DO This Instead
+```python
+# train_model.py with arguments
+def train_model(start_year, end_year, **kwargs):
+    # Single parameterized implementation
+```
+
+### Project-Specific Files
+
+**Core Models (Keep):**
+- [analyze_spy.py](mdc:analyze_spy.py) - Main entry point for SPY analysis
+- [train_final_optimized_model.py](mdc:train_final_optimized_model.py) - Final model training
+
+**Rally Analyzer:**
+- [rally_analyzer/ticker_rally_analyzer.py](mdc:rally_analyzer/ticker_rally_analyzer.py) - Main rally analysis
+
+**Options Anomaly Detection:**
+- [options_anomaly_detection/main.py](mdc:options_anomaly_detection/main.py) - Options analysis entry point
+
+**Hedging Analyzer:**
+- [hedging_analyzer/hedging_activity_analyzer.py](mdc:hedging_analyzer/hedging_activity_analyzer.py) - Hedging pattern detection
+
+### Cleanup Checklist
+Before creating a new analysis script:
+- [ ] Can I add a function to an existing file?
+- [ ] Can I add command-line arguments to make existing script flexible?
+- [ ] Would this be a one-time analysis? (If yes, consider making it temporary)
+- [ ] Will this file be maintained long-term?
+
+### Temporary Analysis Files
+If you must create a file for one-time analysis:
+1. Use a clear naming convention: `analyze_[specific_event]_[date].py`
+2. Add a comment at the top: `# Temporary analysis - Can be deleted after [date/event]`
+3. Consider moving results to a markdown doc and deleting the script
+
+## Remember
+**Code maintainability > Code quantity.** 
+
+Every new file is a maintenance burden. Every refactored file is a gift to future you.

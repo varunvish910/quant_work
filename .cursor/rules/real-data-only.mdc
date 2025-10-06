@@ -1,0 +1,100 @@
+---
+alwaysApply: true
+---
+
+# Real Data Requirements
+
+## Critical Rule: Never Simulate or Generate Fake Data
+
+**ALWAYS use real market data from actual data sources. NEVER create synthetic, simulated, or fake data.**
+
+### ✅ Approved Data Sources
+
+1. **Yahoo Finance (yfinance)**
+   - SPY, VIX, sector ETFs price data
+   - Real-time and historical OHLC data
+   - Use: `yf.download()` or `yf.Ticker()`
+
+2. **Polygon API**
+   - Options chains data
+   - Historical options data
+   - Use: [unified_options_downloader.py](mdc:data_management/unified_options_downloader.py)
+
+3. **Local Parquet Files**
+   - Historical options data (2016-2025)
+   - Located in: [data/options_chains/](mdc:data/options_chains/)
+   - Already downloaded and validated
+
+### ❌ Prohibited Actions
+
+- **DO NOT** generate random price data
+- **DO NOT** create synthetic options data
+- **DO NOT** simulate market scenarios with made-up numbers
+- **DO NOT** use placeholder values like $100, $200, etc.
+- **DO NOT** extrapolate data beyond what's available
+
+### 🔍 When You Don't Know Where to Get Data
+
+**If you need data and don't know the source:**
+
+1. **STOP** - Do not proceed with fake data
+2. **ASK** the user: "Where should I get [specific data type]?"
+3. **WAIT** for the user to provide the data source
+4. **THEN** proceed with the actual data source
+
+### 📊 Data Validation
+
+Before using any data, verify:
+
+```python
+# Example validation for SPY data
+import yfinance as yf
+spy = yf.Ticker('SPY')
+data = spy.history(period='1y')
+
+# Check data is real
+if data.empty:
+    print("ERROR: No data retrieved")
+    exit()
+
+# Check data freshness
+latest_date = data.index[-1]
+days_old = (datetime.now().date() - latest_date.date()).days
+if days_old > 7:
+    print(f"WARNING: Data is {days_old} days old")
+```
+
+### 🎯 Real Data Examples
+
+**CORRECT - Using real SPY data:**
+```python
+spy = yf.Ticker('SPY')
+data = spy.history(period='1y')
+current_price = data['Close'].iloc[-1]  # Real price: $669.21
+```
+
+**INCORRECT - Simulating data:**
+```python
+# ❌ NEVER DO THIS
+current_price = 256.93  # Made-up price
+data = pd.DataFrame({'Close': np.random.randn(252) * 10 + 400})
+```
+
+### 📍 Data Source Reference
+
+- Price Data: [ohlc_data_downloader.py](mdc:data_management/ohlc_data_downloader.py)
+- Options Data: [unified_options_downloader.py](mdc:data_management/unified_options_downloader.py)
+- SPY Analysis: [analyze_spy.py](mdc:analyze_spy.py)
+- Rally Analyzer: [ticker_rally_analyzer.py](mdc:rally_analyzer/ticker_rally_analyzer.py)
+
+### 🚨 Red Flags That Indicate Fake Data
+
+If you see any of these in analysis code, it's WRONG:
+
+- `np.random.randn()` for market data
+- `pd.date_range()` without real data
+- Hardcoded prices that don't match market reality
+- "Synthetic" or "simulated" in variable names
+- Data that's too clean or follows perfect patterns
+
+**Remember: Real markets are messy. Real data is messy. That's what we analyze.**

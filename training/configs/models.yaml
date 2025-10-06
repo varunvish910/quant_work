@@ -1,0 +1,60 @@
+# Model Configuration Definitions
+
+models:
+  lightgbm:
+    type: "lightgbm"
+    params:
+      objective: "binary"
+      metric: "binary_logloss"
+      boosting_type: "gbdt"
+      num_leaves: 31
+      learning_rate: 0.05
+      feature_fraction: 0.9
+      bagging_fraction: 0.8
+      bagging_freq: 5
+      verbose: 0
+      random_state: 42
+      
+  xgboost:
+    type: "xgboost"
+    params:
+      objective: "binary:logistic"
+      eval_metric: "logloss"
+      max_depth: 6
+      learning_rate: 0.05
+      n_estimators: 100
+      subsample: 0.8
+      colsample_bytree: 0.9
+      random_state: 42
+      
+  ensemble:
+    type: "ensemble"
+    base_models:
+      - lightgbm
+      - xgboost
+    meta_learner: "logistic_regression"
+    cv_folds: 5
+    
+  stacked:
+    type: "stacked_ensemble"
+    level_1_models:
+      - lightgbm
+      - xgboost
+    level_2_model: "lightgbm"
+    blending_ratio: 0.5
+    
+validation:
+  walk_forward:
+    type: "walk_forward"
+    initial_train_size: 252  # 1 year
+    step_size: 21  # 1 month
+    
+  time_series:
+    type: "time_series_split"
+    n_splits: 5
+    test_size: 0.2
+    
+  stratified:
+    type: "stratified"
+    n_splits: 5
+    shuffle: true

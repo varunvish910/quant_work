@@ -1,0 +1,56 @@
+# Feature Set Definitions
+
+feature_sets:
+  tier1:
+    description: "Core technical indicators"
+    features:
+      - "spy_returns"
+      - "vix_level"
+      - "vix_term_structure"
+      - "rsi_14"
+      - "bb_position"
+      - "adx_14"
+      - "ma_distance_20"
+      - "volume_ratio"
+      
+  tier2:
+    description: "Extended technical features"
+    includes: ["tier1"]
+    additional_features:
+      - "momentum_5d"
+      - "momentum_10d"
+      - "volatility_realized_20d"
+      - "ma_distance_50"
+      - "ma_distance_200"
+      - "atr_14"
+      - "sector_rotation"
+      
+  enhanced:
+    description: "Technical + Options features"
+    includes: ["tier2"]
+    additional_features:
+      - "options_put_call_ratio"
+      - "options_skew"
+      - "options_gamma_exposure"
+      - "options_iv_rank"
+      - "cross_asset_correlations"
+      
+  all:
+    description: "All available features"
+    includes: ["enhanced"]
+    additional_features:
+      - "currency_usdjpy"
+      - "macro_indicators"
+      - "calendar_effects"
+      - "regime_indicators"
+      
+  reduced_volatility:
+    description: "Features with reduced volatility sensitivity"
+    features:
+      - "spy_returns"
+      - "rsi_14"
+      - "adx_14"
+      - "ma_distance_50"
+      - "ma_distance_200"
+      - "volume_ratio"
+      - "sector_rotation"

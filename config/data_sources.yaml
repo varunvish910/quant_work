@@ -1,0 +1,82 @@
+# Data Source Configuration
+
+data_sources:
+  equity:
+    spy:
+      symbol: "SPY"
+      source: "yfinance"
+      type: "equity"
+      primary: true
+      
+  sectors:
+    technology:
+      symbol: "XLK"
+      name: "Technology Select Sector SPDR Fund"
+    financials:
+      symbol: "XLF"
+      name: "Financial Select Sector SPDR Fund"
+    healthcare:
+      symbol: "XLV" 
+      name: "Health Care Select Sector SPDR Fund"
+    consumer_discretionary:
+      symbol: "XLY"
+      name: "Consumer Discretionary Select Sector SPDR Fund"
+    communication:
+      symbol: "XLC"
+      name: "Communication Services Select Sector SPDR Fund"
+    industrials:
+      symbol: "XLI"
+      name: "Industrial Select Sector SPDR Fund"
+    consumer_staples:
+      symbol: "XLP"
+      name: "Consumer Staples Select Sector SPDR Fund"
+    energy:
+      symbol: "XLE"
+      name: "Energy Select Sector SPDR Fund"
+    utilities:
+      symbol: "XLU"
+      name: "Utilities Select Sector SPDR Fund"
+    real_estate:
+      symbol: "XLRE"
+      name: "Real Estate Select Sector SPDR Fund"
+    materials:
+      symbol: "XLB"
+      name: "Materials Select Sector SPDR Fund"
+      
+  volatility:
+    vix:
+      symbol: "^VIX"
+      name: "CBOE Volatility Index"
+    vix9d:
+      symbol: "^VIX9D"
+      name: "CBOE 9-Day Volatility Index"
+    vvix:
+      symbol: "^VVIX"
+      name: "CBOE VIX Volatility Index"
+      
+  currency:
+    usdjpy:
+      symbol: "USDJPY=X"
+      name: "USD/JPY Exchange Rate"
+    dxy:
+      symbol: "DX-Y.NYB"
+      name: "US Dollar Index"
+    eurusd:
+      symbol: "EURUSD=X"
+      name: "EUR/USD Exchange Rate"
+      
+  fixed_income:
+    treasury_10y:
+      symbol: "^TNX"
+      name: "10-Year Treasury Yield"
+    treasury_2y:
+      symbol: "^IRX"
+      name: "2-Year Treasury Yield"
+
+download_settings:
+  default_period: "2y"
+  auto_adjust: true
+  back_adjust: true
+  progress: true
+  retry_count: 3
+  retry_delay: 1
