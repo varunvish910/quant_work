@@ -125,11 +125,6 @@ htmlcov/
 *.rar
 *.7z
 
-# Large HTML visualizations and output files
-*.html
-visualizations/
-outputs/
-
 # IDE and editor files
 *.swp
 *.swo
