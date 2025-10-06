@@ -594,20 +594,20 @@ def main():
     """Example usage"""
     try:
         # Load data
-        greeks_df = pd.read_parquet("data/spx_options/greeks/aggregated_greeks.parquet")
-        trade_greeks_df = pd.read_parquet("data/spx_options/greeks/trade_level_greeks.parquet")
+        greeks_df = pd.read_parquet("data/spy_options/greeks/aggregated_greeks.parquet")
+        trade_greeks_df = pd.read_parquet("data/spy_options/greeks/trade_level_greeks.parquet")
         
         # Load analysis
-        with open("data/spx_options/market_structure_analysis.json", "r") as f:
+        with open("data/spy_options/market_structure_analysis.json", "r") as f:
             analysis = json.load(f)
         
         print(f"Loaded Greeks data: {len(greeks_df)} strikes, {len(trade_greeks_df)} trades")
         
-        # Current SPX
-        current_spx = 5800
+        # Get current SPY price from analysis or use default
+        current_spy = analysis.get("spy_price", 669.21)
         
         # Create visualizer
-        visualizer = DealerPositioningVisualizer(spot_price=current_spx, theme="dark")
+        visualizer = DealerPositioningVisualizer(spot_price=current_spy, theme="dark")
         
         # Create output directory
         import os
