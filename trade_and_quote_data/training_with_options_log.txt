@@ -1,0 +1,330 @@
+
+1 Failed download:
+['JPY=X']: Timeout('Failed to perform, curl: (28) Connection timed out after 10001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+================================================================================
+🎯 TRAINING EARLY WARNING MODEL WITH OPTIONS FEATURES
+================================================================================
+
+================================================================================
+STEP 1: LOADING DATA
+================================================================================
+
+📊 Loading SPY data...
+📥 Loading SPY data from 2016-01-01 to 2024-12-31...
+🔍 Validating data source: yfinance
+   📊 Price range: $155.44 - $600.51
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+✅ SPY data loaded: 2263 records
+✅ Loaded 2263 days of SPY data
+
+📊 Loading sector data...
+📥 Loading 10 sector ETFs...
+   Loading XLU (Utilities)...
+🔍 Validating data source: yfinance
+   📊 Price range: $31.52 - $80.56
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLU loaded
+   Loading XLK (Technology)...
+🔍 Validating data source: yfinance
+   📊 Price range: $34.66 - $239.92
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLK loaded
+   Loading XLV (Healthcare)...
+🔍 Validating data source: yfinance
+   📊 Price range: $54.01 - $153.91
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLV loaded
+   Loading XLF (Financials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $13.30 - $50.60
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLF loaded
+   Loading XLE (Energy)...
+🔍 Validating data source: yfinance
+   📊 Price range: $18.77 - $94.14
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLE loaded
+   Loading XLI (Industrials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $40.34 - $141.81
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLI loaded
+   Loading XLY (Consumer Discretionary)...
+🔍 Validating data source: yfinance
+   📊 Price range: $61.66 - $237.40
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLY loaded
+   Loading XLP (Consumer Staples)...
+🔍 Validating data source: yfinance
+   📊 Price range: $37.25 - $81.62
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLP loaded
+   Loading XLB (Materials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $30.68 - $95.72
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLB loaded
+   Loading XLRE (Real Estate)...
+🔍 Validating data source: yfinance
+   📊 Price range: $19.51 - $45.64
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ XLRE loaded
+✅ Loaded 10/10 sector ETFs
+📥 Loading 4 rotation indicators...
+   Loading MAGS (Magnificent 7)...
+🔍 Validating data source: yfinance
+   📊 Price range: $24.00 - $57.79
+✅ Data validation passed: 434 records from 2023-04-11 to 2024-12-30
+   ✅ MAGS loaded
+   Loading RSP (Equal Weight S&P 500)...
+🔍 Validating data source: yfinance
+   📊 Price range: $57.67 - $184.51
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ RSP loaded
+   Loading QQQ (Nasdaq 100)...
+🔍 Validating data source: yfinance
+   ❌ Failed to load QQQ: ❌ FORBIDDEN: Unrealistic price range 89.70-535.28 for ROTATION_ETF (expected 10-500)
+   ⚠️  Continuing without QQQ
+   Loading QQQE (Equal Weight Nasdaq 100)...
+🔍 Validating data source: yfinance
+   📊 Price range: $24.59 - $95.64
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ QQQE loaded
+✅ Loaded 3/4 rotation indicators
+✅ Loaded 13 sector ETFs
+
+📊 Loading currency data...
+💱 Loading currency data...
+   Loading USDJPY (JPY=X)...
+🔍 Validating data source: yfinance
+   ❌ Failed to load USDJPY: ❌ FORBIDDEN: Empty dataset
+   🚨 WARNING: USD/JPY is critical for July 2024 detection!
+   ⚠️  Continuing without USDJPY
+   Loading EURUSD (EURUSD=X)...
+🔍 Validating data source: yfinance
+   📊 Price range: $0.96 - $1.25
+✅ Data validation passed: 2344 records from 2016-01-01 to 2024-12-30
+   ✅ EURUSD loaded
+   Loading DXY (UUP)...
+🔍 Validating data source: yfinance
+   📊 Price range: $20.00 - $29.37
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ DXY loaded
+✅ Loaded 2/3 currency pairs
+✅ Loaded 2 currency pairs
+
+📊 Loading volatility data...
+📊 Loading volatility data...
+   Loading VIX (^VIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $9.14 - $82.69
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ VIX loaded
+   Loading VIX9D (^VIX9D)...
+🔍 Validating data source: yfinance
+   📊 Price range: $7.10 - $106.66
+✅ Data validation passed: 2263 records from 2016-01-04 to 2024-12-30
+   ✅ VIX9D loaded
+   Loading VVIX (^VVIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $73.26 - $207.59
+✅ Data validation passed: 2255 records from 2016-01-04 to 2024-12-30
+   ✅ VVIX loaded
+✅ Loaded 3/3 volatility indices
+✅ Loaded 3 volatility indices
+
+📊 Loading options features...
+✅ Loaded 2264 days of options features
+   Features: 33 columns
+
+================================================================================
+STEP 2: CREATING FEATURES
+================================================================================
+
+📊 Creating baseline features...
+================================================================================
+🔧 CALCULATING FEATURES
+================================================================================
+Feature sets: baseline, currency, volatility
+📊 Calculating baseline features...
+   ✅ Rotation indicators: 3 features
+   ✅ Regime detection: 11 features
+   ✅ Momentum exhaustion: 9 features
+   ✅ Baseline features: 31
+💱 Calculating currency features...
+   ✅ Currency features: 5
+📊 Calculating volatility features...
+   ✅ Volatility features: 19
+🧹 Cleaning features...
+   Dropped 20 rows with missing critical features
+   ✅ Clean data: 2243 records with 55 features
+================================================================================
+✅ FEATURE CALCULATION COMPLETE: 55 features
+================================================================================
+✅ Created 55 baseline features
+
+📊 Merging options features...
+✅ Added 30 new options features
+   ℹ️  Skipped 3 duplicate columns: vix_term_structure, vix_backwardation, vix_spike
+
+================================================================================
+STEP 3: CREATING TARGET
+================================================================================
+
+🎯 Creating Early Warning Target
+   Drawdown threshold: 5.0%
+   Lead time: 3-13 days
+   Lookforward window: 10 days
+🎯 EARLY_WARNING TARGET CREATED
+   Total samples: 2,230
+   Positive samples: 408 (18.3%)
+   Negative samples: 1,822 (81.7%)
+   Class balance: 0.22 (1.0 = perfect balance)
+✅ Target created: early_warning_target
+
+================================================================================
+STEP 4: PREPARING TRAINING DATA
+================================================================================
+
+📊 Total samples: 2230
+
+📊 Data splits:
+   Train: 1992 samples (2016-02-02 to 2023-12-29)
+   Val:   124 samples (2024-01-02 to 2024-06-28)
+   Test:  114 samples (2024-07-01 to 2024-12-10)
+
+📊 Class balance:
+   Train: 19.5% positive
+   Val:   0.0% positive
+   Test:  17.5% positive
+
+================================================================================
+MODEL 1: BASELINE (TECHNICAL FEATURES ONLY)
+================================================================================
+
+📊 Using 55 baseline features
+
+🔄 Training baseline model...
+Training until validation scores don't improve for 50 rounds
+[50]	train's auc: 0.995523	val's auc: 1
+Early stopping, best iteration is:
+[1]	train's auc: 0.903722	val's auc: 1
+
+📊 BASELINE MODEL PERFORMANCE:
+================================================================================
+
+Train:
+   ROC AUC:   90.4%
+   Precision: 0.0%
+   Recall:    0.0%
+   F1 Score:  0.0%
+
+Val:
+   ROC AUC:   nan%
+   Precision: 0.0%
+   Recall:    0.0%
+   F1 Score:  0.0%
+
+Test:
+   ROC AUC:   46.0%
+   Precision: 0.0%
+   Recall:    0.0%
+   F1 Score:  0.0%
+
+================================================================================
+MODEL 2: ENHANCED (TECHNICAL + OPTIONS)
+================================================================================
+
+📊 Using 85 features (55 baseline + 30 options)
+
+🔄 Training enhanced model...
+Training until validation scores don't improve for 50 rounds
+[50]	train's auc: 0.996574	val's auc: 1
+Early stopping, best iteration is:
+[1]	train's auc: 0.906265	val's auc: 1
+
+📊 ENHANCED MODEL PERFORMANCE:
+================================================================================
+
+Train:
+   ROC AUC:   90.6%
+   Precision: 0.0%
+   Recall:    0.0%
+   F1 Score:  0.0%
+
+Val:
+   ROC AUC:   nan%
+   Precision: 0.0%
+   Recall:    0.0%
+   F1 Score:  0.0%
+
+Test:
+   ROC AUC:   66.8%
+   Precision: 0.0%
+   Recall:    0.0%
+   F1 Score:  0.0%
+
+================================================================================
+📊 MODEL COMPARISON
+================================================================================
+
+Validation Set:
+   Baseline:  nan% ROC AUC
+   Enhanced:  nan% ROC AUC
+   Improvement: +nan%
+
+Test Set:
+   Baseline:  46.0% ROC AUC
+   Enhanced:  66.8% ROC AUC
+   Improvement: +20.8%
+
+
+================================================================================
+📊 TOP 20 FEATURES (ENHANCED MODEL)
+================================================================================
+
+Top 20 features:
+    1. volatility_20d                                  337  📈 TECHNICAL
+    3. price_vs_sma200                                 103  📈 TECHNICAL
+   83. vix3m_percentile                                 66  📊 OPTIONS
+   33. dxy_momentum_5d                                  53  📈 TECHNICAL
+   19. bb_width_percentile                              39  📈 TECHNICAL
+   46. vix_term_structure                               32  📈 TECHNICAL
+   12. adx                                              31  📈 TECHNICAL
+   78. otm_put_itm_call_ratio                           28  📊 OPTIONS
+   39. vix_momentum_3d                                  21  📈 TECHNICAL
+   49. vvix_level                                       16  📈 TECHNICAL
+   34. dxy_momentum_10d                                 15  📈 TECHNICAL
+    5. return_50d                                       14  📈 TECHNICAL
+   28. macd_histogram                                   13  📈 TECHNICAL
+   76. put_call_premium_ratio                           13  📊 OPTIONS
+   50. vvix_percentile_252d                              9  📈 TECHNICAL
+    7. xlv_vs_xlk                                        7  📈 TECHNICAL
+   10. rsp_vs_spy                                        6  📈 TECHNICAL
+   77. itm_put_otm_call_ratio                            0  📊 OPTIONS
+   57. iv_skew_10d                                       0  📊 OPTIONS
+   61. iv_smile_curvature                                0  📊 OPTIONS
+
+✅ Options features in top 20: 6/20
+
+================================================================================
+💾 SAVING MODELS
+================================================================================
+
+✅ Saved baseline model: models/trained/early_warning_baseline.txt
+✅ Saved enhanced model: models/trained/early_warning_enhanced.txt
+✅ Saved feature config: models/trained/early_warning_features.json
+
+================================================================================
+✅ TRAINING COMPLETE
+================================================================================
+
+🎉 OPTIONS FEATURES IMPROVED MODEL BY +20.8% ROC AUC!
+   Baseline:  46.0%
+   Enhanced:  66.8%
+
+📊 Next steps:
+   - Analyze feature importance
+   - Check for data quality issues in options features
+   - Consider feature engineering improvements
+

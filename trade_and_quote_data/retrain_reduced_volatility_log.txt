@@ -1,0 +1,340 @@
+================================================================================
+🔧 RETRAINING WITH REDUCED VOLATILITY WEIGHTING
+================================================================================
+
+Strategy:
+  1. Scale down volatility features by 0.5x
+  2. Create interaction features (volatility * price momentum)
+  3. Add trend confirmation features
+  4. Retrain with adjusted feature set
+
+================================================================================
+STEP 1: LOADING DATA
+================================================================================
+
+📥 Loading SPY data from 2000-01-01 to 2024-12-31...
+🔍 Validating data source: yfinance
+   📊 Price range: $50.09 - $600.51
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+✅ SPY data loaded: 6288 records
+📥 Loading 10 sector ETFs...
+   Loading XLU (Utilities)...
+🔍 Validating data source: yfinance
+   📊 Price range: $6.84 - $80.56
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLU loaded
+   Loading XLK (Technology)...
+🔍 Validating data source: yfinance
+   📊 Price range: $8.64 - $239.92
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLK loaded
+   Loading XLV (Healthcare)...
+🔍 Validating data source: yfinance
+   📊 Price range: $14.91 - $153.91
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLV loaded
+   Loading XLF (Financials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $3.71 - $50.60
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLF loaded
+   Loading XLE (Energy)...
+🔍 Validating data source: yfinance
+   📊 Price range: $10.51 - $94.14
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLE loaded
+   Loading XLI (Industrials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $11.10 - $141.81
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLI loaded
+   Loading XLY (Consumer Discretionary)...
+🔍 Validating data source: yfinance
+   📊 Price range: $13.03 - $237.40
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLY loaded
+   Loading XLP (Consumer Staples)...
+🔍 Validating data source: yfinance
+   📊 Price range: $10.06 - $81.62
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLP loaded
+   Loading XLB (Materials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $9.79 - $95.72
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLB loaded
+   Loading XLRE (Real Estate)...
+🔍 Validating data source: yfinance
+   📊 Price range: $19.51 - $45.64
+✅ Data validation passed: 2322 records from 2015-10-08 to 2024-12-30
+   ✅ XLRE loaded
+✅ Loaded 10/10 sector ETFs
+📥 Loading 4 rotation indicators...
+   Loading MAGS (Magnificent 7)...
+🔍 Validating data source: yfinance
+   📊 Price range: $24.00 - $57.79
+✅ Data validation passed: 434 records from 2023-04-11 to 2024-12-30
+   ✅ MAGS loaded
+   Loading RSP (Equal Weight S&P 500)...
+🔍 Validating data source: yfinance
+   📊 Price range: $15.64 - $184.51
+✅ Data validation passed: 5454 records from 2003-05-01 to 2024-12-30
+   ✅ RSP loaded
+   Loading QQQ (Nasdaq 100)...
+🔍 Validating data source: yfinance
+   ❌ Failed to load QQQ: ❌ FORBIDDEN: Unrealistic price range 16.97-535.28 for ROTATION_ETF (expected 10-500)
+   ⚠️  Continuing without QQQ
+   Loading QQQE (Equal Weight Nasdaq 100)...
+🔍 Validating data source: yfinance
+   📊 Price range: $15.12 - $95.64
+✅ Data validation passed: 3215 records from 2012-03-21 to 2024-12-30
+   ✅ QQQE loaded
+✅ Loaded 3/4 rotation indicators
+💱 Loading currency data...
+   Loading USDJPY (JPY=X)...
+🔍 Validating data source: yfinance
+   📊 Price range: $75.74 - $161.62
+✅ Data validation passed: 6492 records from 2000-01-03 to 2024-12-30
+   ✅ USDJPY loaded
+   Loading EURUSD (EURUSD=X)...
+🔍 Validating data source: yfinance
+   📊 Price range: $0.96 - $1.60
+✅ Data validation passed: 5472 records from 2003-12-01 to 2024-12-30
+   ✅ EURUSD loaded
+   Loading DXY (UUP)...
+🔍 Validating data source: yfinance
+   📊 Price range: $18.08 - $29.37
+✅ Data validation passed: 4490 records from 2007-03-01 to 2024-12-30
+   ✅ DXY loaded
+✅ Loaded 3/3 currency pairs
+📊 Loading volatility data...
+   Loading VIX (^VIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $9.14 - $82.69
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ VIX loaded
+   Loading VIX9D (^VIX9D)...
+🔍 Validating data source: yfinance
+   📊 Price range: $7.10 - $106.66
+✅ Data validation passed: 3521 records from 2011-01-03 to 2024-12-30
+   ✅ VIX9D loaded
+   Loading VVIX (^VVIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $59.74 - $207.59
+✅ Data validation passed: 4520 records from 2007-01-03 to 2024-12-30
+   ✅ VVIX loaded
+✅ Loaded 3/3 volatility indices
+✅ Loaded options features
+
+================================================================================
+STEP 2: CREATING FEATURES WITH REDUCED VOLATILITY WEIGHTING
+================================================================================
+
+================================================================================
+🔧 CALCULATING FEATURES
+================================================================================
+Feature sets: baseline, currency, volatility
+📊 Calculating baseline features...
+   ✅ Rotation indicators: 3 features
+   ✅ Regime detection: 11 features
+   ✅ Momentum exhaustion: 9 features
+   ✅ Baseline features: 31
+💱 Calculating currency features...
+   ✅ Currency features: 12
+📊 Calculating volatility features...
+   ✅ Volatility features: 19
+🧹 Cleaning features...
+   Dropped 20 rows with missing critical features
+   ✅ Clean data: 6268 records with 62 features
+================================================================================
+✅ FEATURE CALCULATION COMPLETE: 62 features
+================================================================================
+✅ Added 30 options features
+
+================================================================================
+STEP 3: ADJUSTING FEATURE WEIGHTS
+================================================================================
+
+📉 Scaling down volatility features by 0.5x:
+   ✅ Scaled: vix_spike
+   ✅ Scaled: vix_regime
+   ✅ Scaled: vix_term_structure
+   ✅ Scaled: vix_backwardation
+   ✅ Scaled: vix_percentile
+   ✅ Scaled: bb_width
+   ✅ Scaled: bb_width_percentile
+   ✅ Scaled: bb_squeeze
+   ✅ Scaled: bb_expansion
+
+📊 Creating interaction features:
+   ✅ bb_width_distance_interaction
+
+📈 Creating trend confirmation features:
+   ✅ trend_strength
+
+================================================================================
+STEP 4: CREATING TARGET
+================================================================================
+
+🎯 Creating Early Warning Target
+   Drawdown threshold: 2.0%
+   Lead time: 3-5 days
+   Lookforward window: 5 days
+🎯 EARLY_WARNING TARGET CREATED
+   Total samples: 6,263
+   Positive samples: 2,307 (36.8%)
+   Negative samples: 3,956 (63.2%)
+   Class balance: 0.58 (1.0 = perfect balance)
+
+================================================================================
+STEP 5: PREPARING TRAINING DATA
+================================================================================
+
+Training: 5767 samples (37.8% positive)
+Validation: 250 samples (26.8% positive)
+Test: 246 samples (23.6% positive)
+
+================================================================================
+STEP 6: TRAINING MODEL
+================================================================================
+
+[LightGBM] [Info] Number of positive: 2182, number of negative: 3585
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.001965 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 14505
+[LightGBM] [Info] Number of data points in the train set: 5767, number of used features: 74
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.378360 -> initscore=-0.496517
+[LightGBM] [Info] Start training from score -0.496517
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+✅ Training complete (stopped at 14 iterations)
+
+================================================================================
+STEP 7: EVALUATING MODEL
+================================================================================
+
+📊 Test Set Performance:
+   ROC AUC: 47.1%
+   Precision: 20.3%
+   Recall: 24.1%
+   F1 Score: 22.0%
+
+📊 Confusion Matrix:
+   True Negatives:  133
+   False Positives: 55
+   False Negatives: 44
+   True Positives:  14
+   False Positive Rate: 29.3%
+
+================================================================================
+STEP 8: FEATURE IMPORTANCE
+================================================================================
+
+Top 20 Most Important Features:
+   vix_level                                    39.0
+   usdjpy_level                                 36.0
+   volatility_20d                               25.0
+   macd_histogram                               25.0
+   atr_14                                       23.0
+   rsp_vs_spy                                   17.0
+   macd_signal                                  16.0
+   price_vs_sma200                              15.0
+   macd                                         13.0
+   bb_width                                     11.0
+   vix3m_percentile                             10.0
+   vvix_percentile_252d                         10.0
+   vix_percentile_252d                          10.0
+   usdjpy_volatility                            10.0
+   vix_momentum_5d                               9.0
+   vix_term_structure                            8.0
+   bb_width_percentile                           8.0
+   bb_width_distance_interaction                 7.0
+   return_50d                                    7.0
+   adx                                           7.0
+
+📊 Volatility Features:
+   Total importance: 7.3% (down from ~60%)
+
+================================================================================
+STEP 9: SAVING MODEL
+================================================================================
+
+✅ Model saved to: models/trained/early_warning_reduced_volatility.txt
+✅ Config saved to: models/trained/early_warning_reduced_volatility_config.json
+
+================================================================================
+✅ RETRAINING COMPLETE
+================================================================================
+
+Changes Made:
+  1. ✅ Scaled volatility features by 0.5x
+  2. ✅ Added interaction features (volatility * price action)
+  3. ✅ Added trend confirmation features
+
+Results:
+  ROC AUC: 47.1%
+  False Positive Rate: 29.3%
+  Volatility feature importance: 7.3% (target: <40%)
+
+Next Steps:
+  1. Run predictions on 2025 data
+  2. Compare false positive rate with original model
+  3. Visualize new signals

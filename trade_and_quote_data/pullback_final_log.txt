@@ -1,0 +1,255 @@
+================================================================================
+🚀 FINAL PULLBACK MODEL - WITH REGIME + MOMENTUM FEATURES
+================================================================================
+Testing with REAL DATA ONLY
+================================================================================
+
+
+================================================================================
+🎯 TRAINING WITH REGIME DETECTION + MOMENTUM EXHAUSTION
+================================================================================
+================================================================================
+📥 LOADING DATA
+================================================================================
+================================================================================
+📥 LOADING ALL MARKET DATA
+================================================================================
+📥 Loading SPY data from 2000-01-01 to 2024-12-31...
+🔍 Validating data source: yfinance
+   📊 Price range: $50.09 - $600.51
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+✅ SPY data loaded: 6288 records
+📥 Loading 10 sector ETFs...
+   Loading XLU (Utilities)...
+🔍 Validating data source: yfinance
+   📊 Price range: $6.84 - $80.56
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLU loaded
+   Loading XLK (Technology)...
+🔍 Validating data source: yfinance
+   📊 Price range: $8.64 - $239.92
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLK loaded
+   Loading XLV (Healthcare)...
+🔍 Validating data source: yfinance
+   📊 Price range: $14.91 - $153.91
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLV loaded
+   Loading XLF (Financials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $3.71 - $50.60
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLF loaded
+   Loading XLE (Energy)...
+🔍 Validating data source: yfinance
+   📊 Price range: $10.51 - $94.14
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLE loaded
+   Loading XLI (Industrials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $11.10 - $141.81
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLI loaded
+   Loading XLY (Consumer Discretionary)...
+🔍 Validating data source: yfinance
+   📊 Price range: $13.03 - $237.40
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLY loaded
+   Loading XLP (Consumer Staples)...
+🔍 Validating data source: yfinance
+   📊 Price range: $10.06 - $81.62
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLP loaded
+   Loading XLB (Materials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $9.79 - $95.72
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ XLB loaded
+   Loading XLRE (Real Estate)...
+🔍 Validating data source: yfinance
+   📊 Price range: $19.51 - $45.64
+✅ Data validation passed: 2322 records from 2015-10-08 to 2024-12-30
+   ✅ XLRE loaded
+✅ Loaded 10/10 sector ETFs
+📥 Loading 4 rotation indicators...
+   Loading MAGS (Magnificent 7)...
+🔍 Validating data source: yfinance
+   📊 Price range: $24.00 - $57.79
+✅ Data validation passed: 434 records from 2023-04-11 to 2024-12-30
+   ✅ MAGS loaded
+   Loading RSP (Equal Weight S&P 500)...
+🔍 Validating data source: yfinance
+   📊 Price range: $15.64 - $184.51
+✅ Data validation passed: 5454 records from 2003-05-01 to 2024-12-30
+   ✅ RSP loaded
+   Loading QQQ (Nasdaq 100)...
+🔍 Validating data source: yfinance
+   ❌ Failed to load QQQ: ❌ FORBIDDEN: Unrealistic price range 16.97-535.28 for ROTATION_ETF (expected 10-500)
+   ⚠️  Continuing without QQQ
+   Loading QQQE (Equal Weight Nasdaq 100)...
+🔍 Validating data source: yfinance
+   📊 Price range: $15.12 - $95.64
+✅ Data validation passed: 3215 records from 2012-03-21 to 2024-12-30
+   ✅ QQQE loaded
+✅ Loaded 3/4 rotation indicators
+💱 Loading currency data...
+   Loading USDJPY (JPY=X)...
+🔍 Validating data source: yfinance
+   📊 Price range: $75.74 - $161.62
+✅ Data validation passed: 6492 records from 2000-01-03 to 2024-12-30
+   ✅ USDJPY loaded
+   Loading EURUSD (EURUSD=X)...
+🔍 Validating data source: yfinance
+   📊 Price range: $0.96 - $1.60
+✅ Data validation passed: 5472 records from 2003-12-01 to 2024-12-30
+   ✅ EURUSD loaded
+   Loading DXY (UUP)...
+🔍 Validating data source: yfinance
+   📊 Price range: $18.08 - $29.37
+✅ Data validation passed: 4490 records from 2007-03-01 to 2024-12-30
+   ✅ DXY loaded
+✅ Loaded 3/3 currency pairs
+📊 Loading volatility data...
+   Loading VIX (^VIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $9.14 - $82.69
+✅ Data validation passed: 6288 records from 2000-01-03 to 2024-12-30
+   ✅ VIX loaded
+   Loading VIX9D (^VIX9D)...
+🔍 Validating data source: yfinance
+   📊 Price range: $7.10 - $106.66
+✅ Data validation passed: 3521 records from 2011-01-03 to 2024-12-30
+   ✅ VIX9D loaded
+   Loading VVIX (^VVIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $59.74 - $207.59
+✅ Data validation passed: 4520 records from 2007-01-03 to 2024-12-30
+   ✅ VVIX loaded
+✅ Loaded 3/3 volatility indices
+================================================================================
+✅ ALL DATA LOADED SUCCESSFULLY
+================================================================================
+
+================================================================================
+🔧 FEATURE ENGINEERING
+================================================================================
+================================================================================
+🔧 CALCULATING FEATURES
+================================================================================
+Feature sets: baseline, currency, volatility, sectors
+📊 Calculating baseline features...
+   ✅ Rotation indicators: 3 features
+   ✅ Regime detection: 11 features
+   ✅ Momentum exhaustion: 9 features
+   ✅ Baseline features: 31
+💱 Calculating currency features...
+   ✅ Currency features: 12
+📊 Calculating volatility features...
+   ✅ Volatility features: 19
+🧹 Cleaning features...
+   Dropped 20 rows with missing critical features
+   ✅ Clean data: 6268 records with 62 features
+================================================================================
+✅ FEATURE CALCULATION COMPLETE: 62 features
+================================================================================
+
+✅ Features engineered: 62 total features
+🎯 Creating Pullback Prediction Target
+   Pullback threshold: 5.0%
+   Lookforward window: 5-15 days
+
+🎯 PULLBACK PREDICTION TARGET CREATED
+   Total samples: 6273
+   Pullback events: 1091 (17.4%)
+   No pullback: 5182 (82.6%)
+   Class balance: 0.21
+
+================================================================================
+✂️  DATA SPLITTING
+================================================================================
+📊 Splitting data: Train ≤ 2022-12-31, Val ≤ 2023-12-31, Test > 2023-12-31
+   Train: 5767 records (2000-02-01 to 2022-12-30)
+   Val:   250 records (2023-01-03 to 2023-12-29)
+   Test:  236 records (2024-01-02 to 2024-12-06)
+
+📊 Training data:
+   Train samples: 5767
+   Test samples: 236
+   Features: 62
+   Positive rate: 18.0%
+🎓 Training ensemble model...
+   Features: 62
+   Training samples: 5767
+   Positive rate: 18.03%
+✅ Model trained successfully
+
+================================================================================
+📊 RESULTS
+================================================================================
+
+🎯 ROC AUC: 50.6%
+🎯 Precision: 5.5%
+🎯 Recall: 20.0%
+
+Classification Report:
+              precision    recall  f1-score   support
+
+ No Pullback       0.93      0.76      0.84       221
+    Pullback       0.05      0.20      0.09        15
+
+    accuracy                           0.73       236
+   macro avg       0.49      0.48      0.46       236
+weighted avg       0.88      0.73      0.79       236
+
+
+Confusion Matrix:
+[[169  52]
+ [ 12   3]]
+
+True Negatives:  169 (correctly predicted no pullback)
+False Positives: 52 (false alarm)
+False Negatives: 12 (missed pullback)
+True Positives:  3 (correctly predicted pullback)
+
+================================================================================
+📊 TOP 20 MOST IMPORTANT FEATURES
+================================================================================
+  vix_level: 0.0655
+  volatility_20d: 0.0584
+  realized_vol_20d: 0.0523
+  price_vs_sma200: 0.0506
+  atr_14: 0.0367
+  vix_percentile_252d: 0.0320
+  regime_confidence: 0.0285
+  usdjpy_level: 0.0280
+  adx_regime_score: 0.0237
+  adx: 0.0232
+  bb_width: 0.0222
+  xlv_vs_xlk: 0.0221
+  macd: 0.0220
+  vix_regime: 0.0216
+  rsp_vs_spy: 0.0211
+  macd_signal: 0.0210
+  usdjpy_volatility: 0.0207
+  vvix_level: 0.0207
+  dxy_level: 0.0200
+  xlu_vs_xlk: 0.0195
+💾 Model saved: models/trained/pullback_final_20251005.pkl/ensemble_model.pkl
+💾 Features saved: models/trained/pullback_final_20251005.pkl/feature_columns.json
+💾 Metadata saved: models/trained/pullback_final_20251005.pkl/model_metadata.json
+
+💾 Saved: models/trained/pullback_final_20251005.pkl
+
+================================================================================
+✅ TRAINING COMPLETE
+================================================================================
+
+Final ROC AUC: 50.6%
+Improvement from baseline (36.4%): +14.2 percentage points
+
+✅ IMPROVEMENT! Model is better than random
+   Consider adding Polygon options data for further improvement
+
+================================================================================
+✅ ALL DATA WAS REAL from Yahoo Finance
+================================================================================

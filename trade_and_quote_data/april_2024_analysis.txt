@@ -1,0 +1,251 @@
+/Users/varun/code/quant_final_final/trade_and_quote_data/analyze_april_2024.py:22: FutureWarning: YF.download() has changed argument auto_adjust default to True
+  spy = yf.download('SPY', start='2024-03-01', end='2024-06-01', progress=False)
+/Users/varun/code/quant_final_final/trade_and_quote_data/analyze_april_2024.py:117: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  april_data['daily_return'] = april_data['Close'].pct_change()
+/Users/varun/code/quant_final_final/trade_and_quote_data/analyze_april_2024.py:118: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  april_data['cumulative_return'] = (1 + april_data['daily_return']).cumprod() - 1
+[LightGBM] [Fatal] The number of features in data (94) is not the same as it was in training data (92).
+You can set ``predict_disable_shape_check=true`` to discard this error, but please be aware what you are doing.
+================================================================================
+📊 ANALYZING APRIL 2024 PULLBACK
+================================================================================
+
+📊 SPY Price Action (March-May 2024):
+Price            Close        High         Low
+Date                                          
+2024-03-01  501.956451  502.387108  497.757597
+2024-03-04  501.418182  503.277848  501.124567
+2024-03-05  496.406921  499.852172  494.185149
+2024-03-06  498.922333  501.193061  497.620597
+2024-03-07  503.874847  504.931924  498.981053
+2024-03-08  500.850555  507.212459  500.273091
+2024-03-11  500.419861  501.007122  497.698912
+2024-03-12  505.803040  506.390271  500.008744
+2024-03-13  505.010193  506.302162  503.561649
+2024-03-14  504.011902  506.145589  500.948382
+
+📈 Peak: 2024-05-21 at $521.69
+📉 Trough: 2024-04-19 at $486.15
+
+💥 Decline: -6.81% over -32 days
+
+================================================================================
+GRADUAL PULLBACK CRITERIA CHECK
+================================================================================
+
+1. Decline >= 4%: 6.81% - ✅ YES
+2. Timeframe 15-30 days: -32 days - ❌ NO
+3. Daily volatility < 2%: 0.67% - ✅ YES
+4. Negative slope: 1.55 - ❌ NO
+
+================================================================================
+ANALYSIS
+================================================================================
+
+❌ April 2024 did NOT meet all criteria:
+   - Timeframe was -32 days (need 15-30 days)
+   - Slope was not consistently negative
+
+================================================================================
+DAILY PRICE ACTION (April 2024)
+================================================================================
+
+Price            Close        High         Low     Volume
+Date                                                     
+2024-04-01  512.656677  514.836304  511.488333   62477500
+2024-04-02  509.397125  509.534532  507.080032   74230300
+2024-04-03  509.956696  511.468706  508.248373   59155800
+2024-04-04  503.732086  514.335513  503.427731   96858100
+2024-04-05  508.994537  510.967965  504.654998   74546500
+2024-04-08  509.279266  510.712716  508.464416   48401800
+2024-04-09  509.868317  511.272283  504.988740   68049200
+2024-04-10  504.763000  506.765851  502.769978   82652800
+2024-04-11  508.572418  510.025463  502.760179   70099000
+2024-04-12  501.552490  506.432037  499.814685   92561100
+2024-04-15  495.269012  505.921518  494.414821   92101400
+2024-04-16  494.365723  497.281670  493.069740   73484000
+2024-04-17  491.439911  497.006729  490.035944   75910300
+2024-04-18  490.428711  494.954824  489.486191   74548100
+2024-04-19  486.148071  491.351599  484.871713  102212600
+2024-04-22  490.625092  493.236683  486.413161   67961000
+2024-04-23  496.447144  496.879138  490.438533   64633600
+2024-04-24  496.211517  498.135837  493.973015   55928100
+2024-04-25  494.326416  495.092219  488.435617   69122400
+2024-04-26  499.009644  500.600155  496.496238   64306100
+2024-04-29  500.776886  501.454330  498.018030   46415400
+2024-04-30  492.843964  500.285994  492.843964   77483600
+
+================================================================================
+APRIL 2024 STATISTICS
+================================================================================
+
+Start price: $512.66
+End price: $492.84
+Total return: -3.86%
+Max drawdown: -5.17%
+Avg daily return: -0.18%
+Daily volatility: 0.85%
+
+================================================================================
+MODEL PREDICTIONS
+================================================================================
+
+📥 Loading SPY data from 2024-01-01 to 2024-06-01...
+🔍 Validating data source: yfinance
+   📊 Price range: $457.35 - $521.69
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+✅ SPY data loaded: 105 records
+📥 Loading 10 sector ETFs...
+   Loading XLU (Utilities)...
+🔍 Validating data source: yfinance
+   📊 Price range: $56.91 - $69.75
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLU loaded
+   Loading XLK (Technology)...
+🔍 Validating data source: yfinance
+   📊 Price range: $182.01 - $213.98
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLK loaded
+   Loading XLV (Healthcare)...
+🔍 Validating data source: yfinance
+   📊 Price range: $134.53 - $144.03
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLV loaded
+   Loading XLF (Financials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $36.32 - $41.56
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLF loaded
+   Loading XLE (Energy)...
+🔍 Validating data source: yfinance
+   📊 Price range: $75.48 - $93.40
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLE loaded
+   Loading XLI (Industrials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $107.51 - $123.23
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLI loaded
+   Loading XLY (Consumer Discretionary)...
+🔍 Validating data source: yfinance
+   📊 Price range: $167.61 - $182.28
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLY loaded
+   Loading XLP (Consumer Staples)...
+🔍 Validating data source: yfinance
+   📊 Price range: $68.33 - $75.38
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLP loaded
+   Loading XLB (Materials)...
+🔍 Validating data source: yfinance
+   📊 Price range: $78.39 - $90.40
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLB loaded
+   Loading XLRE (Real Estate)...
+🔍 Validating data source: yfinance
+   📊 Price range: $33.96 - $38.17
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ XLRE loaded
+✅ Loaded 10/10 sector ETFs
+📥 Loading 4 rotation indicators...
+   Loading MAGS (Magnificent 7)...
+🔍 Validating data source: yfinance
+   📊 Price range: $32.01 - $41.88
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ MAGS loaded
+   Loading RSP (Equal Weight S&P 500)...
+🔍 Validating data source: yfinance
+   📊 Price range: $149.47 - $165.24
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ RSP loaded
+   Loading QQQ (Nasdaq 100)...
+🔍 Validating data source: yfinance
+   📊 Price range: $392.46 - $455.85
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ QQQ loaded
+   Loading QQQE (Equal Weight Nasdaq 100)...
+🔍 Validating data source: yfinance
+   📊 Price range: $81.13 - $88.40
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ QQQE loaded
+✅ Loaded 4/4 rotation indicators
+💱 Loading currency data...
+   Loading USDJPY (JPY=X)...
+🔍 Validating data source: yfinance
+   📊 Price range: $140.95 - $158.22
+✅ Data validation passed: 110 records from 2024-01-01 to 2024-05-31
+   ✅ USDJPY loaded
+   Loading EURUSD (EURUSD=X)...
+🔍 Validating data source: yfinance
+   📊 Price range: $1.06 - $1.11
+✅ Data validation passed: 110 records from 2024-01-01 to 2024-05-31
+   ✅ EURUSD loaded
+   Loading DXY (UUP)...
+🔍 Validating data source: yfinance
+   📊 Price range: $26.14 - $27.73
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ DXY loaded
+✅ Loaded 3/3 currency pairs
+📊 Loading volatility data...
+   Loading VIX (^VIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $11.86 - $19.23
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ VIX loaded
+   Loading VIX9D (^VIX9D)...
+🔍 Validating data source: yfinance
+   📊 Price range: $9.19 - $20.76
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ VIX9D loaded
+   Loading VVIX (^VVIX)...
+🔍 Validating data source: yfinance
+   📊 Price range: $73.26 - $109.64
+✅ Data validation passed: 105 records from 2024-01-02 to 2024-05-31
+   ✅ VVIX loaded
+✅ Loaded 3/3 volatility indices
+================================================================================
+🔧 CALCULATING FEATURES
+================================================================================
+Feature sets: baseline, currency, volatility
+📊 Calculating baseline features...
+   ✅ Rotation indicators: 5 features
+   ✅ Regime detection: 11 features
+   ✅ Momentum exhaustion: 9 features
+   ✅ Baseline features: 33
+💱 Calculating currency features...
+   ✅ Currency features: 12
+📊 Calculating volatility features...
+   ✅ Volatility features: 19
+🧹 Cleaning features...
+   Dropped 20 rows with missing critical features
+   ✅ Clean data: 85 records with 64 features
+================================================================================
+✅ FEATURE CALCULATION COMPLETE: 64 features
+================================================================================
+Traceback (most recent call last):
+  File "/Users/varun/code/quant_final_final/trade_and_quote_data/analyze_april_2024.py", line 177, in <module>
+    predictions = model.predict(X_april, num_iteration=model.best_iteration)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/lightgbm/basic.py", line 4767, in predict
+    return predictor.predict(
+           ^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/lightgbm/basic.py", line 1204, in predict
+    preds, nrow = self.__pred_for_np2d(
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/lightgbm/basic.py", line 1361, in __pred_for_np2d
+    return self.__inner_predict_np2d(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/lightgbm/basic.py", line 1307, in __inner_predict_np2d
+    _safe_call(
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/lightgbm/basic.py", line 313, in _safe_call
+    raise LightGBMError(_LIB.LGBM_GetLastError().decode("utf-8"))
+lightgbm.basic.LightGBMError: The number of features in data (94) is not the same as it was in training data (92).
+You can set ``predict_disable_shape_check=true`` to discard this error, but please be aware what you are doing.
