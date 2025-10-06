@@ -1,0 +1,32 @@
+# SPX Dealer Positioning Analysis Requirements
+
+# Core data processing
+pandas>=1.5.0
+numpy>=1.21.0
+polars>=0.18.0
+
+# Options pricing and Greeks
+scipy>=1.9.0
+QuantLib-Python>=1.29
+py-vollib>=1.0.1
+
+# Visualization
+plotly>=5.15.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# API and async
+polygon-api-client>=1.9.0
+asyncio
+aiohttp>=3.8.0
+
+# Analysis and ML
+scikit-learn>=1.1.0
+statsmodels>=0.13.0
+
+# Utilities
+python-dateutil>=2.8.0
+pathlib
+argparse
+dataclasses
+yfinance>=0.2.0
