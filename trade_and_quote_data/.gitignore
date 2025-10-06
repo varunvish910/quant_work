@@ -40,18 +40,55 @@ venv.bak/
 # Data directories (keep structure but ignore data files)
 data/
 !data/.gitkeep
+!data/*/
+data/**/
+!data/**/.gitkeep
+
+# Trained models and model artifacts
+models/trained/
+models/gradual_decline_ensemble/
+models/rally_analyzer/
+models/options_analysis/
+*.joblib
+*.pkl
+*.pickle
+*.model
+*.sav
+*.h5
+*.hdf5
+
+# Data files
+*.csv
+*.parquet
+*.feather
+*.json
+!config/*.json
+!config/*.yaml
+!training/configs/*.yaml
+!analysis/configs/*.yaml
 
 # Archive (if not needed in repo)
 archive/
 
-# Logs
+# Logs and output files
 *.log
+*.txt
+!README.txt
+!requirements.txt
 logs/
+output/
+analysis/outputs/
 
 # Temporary files
 *.tmp
 *.temp
 *.bak
+*.pid
+backup/
+
+# Cache directories
+cache/
+__pycache__/
 
 # macOS
 .DS_Store
@@ -62,13 +99,33 @@ logs/
 .env.local
 .env.production
 secrets.json
+secrets.yaml
 config/secrets.py
+config/secrets.yaml
+api_keys.py
 
 # Jupyter Notebooks
 .ipynb_checkpoints
 
-# Test outputs
+# Test outputs and artifacts
 test_output/
-*.csv
-*.parquet
-*.pickle
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Large files and images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# IDE and editor files
+*.swp
+*.swo
+*~
