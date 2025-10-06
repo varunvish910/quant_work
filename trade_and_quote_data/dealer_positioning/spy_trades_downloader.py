@@ -238,8 +238,8 @@ class SPYTradesDownloader:
         
         self.logger.info(f"📥 Downloading {data_type} flat file for {date}...")
         
-        # Polygon flat file URL format
-        flat_file_url = f"https://files.polygon.io/market_data/options/{data_type}/{date_obj.strftime('%Y/%m/%d')}.csv.gz"
+        # Polygon flat file URL format - use the S3 flatfiles path
+        flat_file_url = f"https://files.polygon.io/flatfiles/us_options_opra/{data_type}_v1/{date_obj.strftime('%Y/%m/%d')}.csv.gz"
         
         headers = {
             'Authorization': f'Bearer {self.api_key}'
