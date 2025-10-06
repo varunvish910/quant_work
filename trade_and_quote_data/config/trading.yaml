@@ -1,0 +1,48 @@
+# Trading Parameters Configuration
+
+risk_management:
+  max_position_size: 0.1  # 10% of portfolio
+  stop_loss: 0.05         # 5% stop loss
+  take_profit: 0.10       # 10% take profit
+  max_drawdown: 0.15      # 15% max drawdown
+  
+signal_thresholds:
+  pullback_2pct_5d:
+    entry_threshold: 0.8
+    exit_threshold: 0.3
+    confidence_threshold: 0.7
+    
+  pullback_4pct_30d:
+    entry_threshold: 0.75
+    exit_threshold: 0.25
+    confidence_threshold: 0.65
+    
+  early_warning_2pct_3to5d:
+    entry_threshold: 0.85
+    exit_threshold: 0.2
+    confidence_threshold: 0.8
+    
+  early_warning_4pct_30d:
+    entry_threshold: 0.7
+    exit_threshold: 0.3
+    confidence_threshold: 0.6
+
+portfolio:
+  base_currency: "USD"
+  initial_capital: 100000
+  commission_rate: 0.001  # 0.1%
+  slippage: 0.0005       # 0.05%
+  
+backtesting:
+  start_date: "2020-01-01"
+  end_date: "2024-12-31"
+  rebalance_frequency: "monthly"
+  benchmark: "SPY"
+  
+execution:
+  market_hours:
+    start: "09:30"
+    end: "16:00"
+    timezone: "US/Eastern"
+  order_types: ["market", "limit", "stop"]
+  default_order_type: "market"

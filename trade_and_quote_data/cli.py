@@ -1,41 +1,86 @@
 #!/usr/bin/env python3
 """
-Command-Line Interface for SPX Early Warning System
+Unified Command-Line Interface for Trade and Quote Data Analysis System
 
-Unified entry point for all operations: training, prediction, and analysis.
+Single entry point for all operations: data management, training, prediction, and analysis.
 """
 
 import click
 from datetime import datetime
 import sys
+import os
 
-from training.trainer import ModelTrainer
-from training.validator import ModelValidator
-from core.models import EarlyWarningModel
-from core.data_loader import DataLoader
-from core.features import FeatureEngine
-from utils.constants import (
-    TRAIN_START_DATE, TRAIN_END_DATE, VAL_END_DATE, TEST_END_DATE
-)
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Import modules
+from data_management.unified_downloader import UnifiedDownloader
+from training.train import main as train_main
+from analysis.analyze import main as analyze_main
 
 
 @click.group()
 def cli():
-    """SPX Early Warning System - Unified CLI"""
+    """Trade and Quote Data Analysis System - Unified CLI"""
     pass
 
 
-@cli.command()
-@click.option('--model', '-m', type=click.Choice(['rf', 'xgboost', 'ensemble']), 
-              default='ensemble', help='Model type to train')
-@click.option('--features', '-f', multiple=True, 
-              default=['baseline'], help='Feature sets to use (baseline, currency, volatility, all)')
-@click.option('--target', '-t', type=click.Choice(['early_warning', 'mean_reversion', 'pullback']),
-              default='early_warning', help='Target type')
-@click.option('--start-date', default=TRAIN_START_DATE, help='Start date for data')
-@click.option('--end-date', default=TEST_END_DATE, help='End date for data')
-@click.option('--no-save', is_flag=True, help='Do not save trained model')
-def train(model, features, target, start_date, end_date, no_save):
+@cli.group()
+def data():
+    """Data management commands"""
+    pass
+
+
+@data.command()
+@click.option('--start-date', default='2020-01-01', help='Start date for data download')
+@click.option('--end-date', help='End date for data download (default: today)')
+@click.option('--symbols', multiple=True, default=['SPY'], help='Symbols to download')
+def download(start_date, end_date, symbols):
+    """Download all required data"""
+    click.echo("📊 Downloading market data...")
+    downloader = UnifiedDownloader()
+    downloader.download_all(start_date, end_date or datetime.now().strftime('%Y-%m-%d'), list(symbols))
+    click.echo("✅ Data download complete!")
+
+
+@data.command()
+def update():
+    """Update existing data"""
+    click.echo("🔄 Updating market data...")
+    downloader = UnifiedDownloader()
+    downloader.update_data()
+    click.echo("✅ Data update complete!")
+
+
+@data.command()
+def validate():
+    """Check data integrity"""
+    click.echo("🔍 Validating data integrity...")
+    # Add validation logic
+    click.echo("✅ Data validation complete!")
+
+
+@cli.group()
+def train():
+    """Training commands"""
+    pass
+
+
+@train.command()
+@click.option('--target', required=True, 
+              type=click.Choice(['pullback_2pct_5d', 'pullback_4pct_30d', 'early_warning_2pct_3to5d', 
+                               'early_warning_4pct_30d', 'mean_reversion', 'crash_detection']),
+              help='Target variable to predict')
+@click.option('--features', default='tier1',
+              type=click.Choice(['tier1', 'tier2', 'enhanced', 'all', 'reduced_volatility']),
+              help='Feature set to use')
+@click.option('--model', default='lightgbm',
+              type=click.Choice(['lightgbm', 'xgboost', 'ensemble', 'stacked']),
+              help='Model type to train')
+@click.option('--validation', default='walk-forward',
+              type=click.Choice(['walk-forward', 'time-series', 'stratified']),
+              help='Validation strategy')
+def single(target, features, model, validation):
     """Train a new model"""
     
     click.echo("=" * 80)

@@ -1,0 +1,46 @@
+# Target Definitions for Model Training
+
+targets:
+  pullback_2pct_5d:
+    description: "2% pullback within 5 days"
+    type: "binary"
+    lookforward_days: 5
+    threshold: 0.02
+    direction: "down"
+    
+  pullback_4pct_30d:
+    description: "4% pullback within 30 days"
+    type: "binary"
+    lookforward_days: 30
+    threshold: 0.04
+    direction: "down"
+    
+  early_warning_2pct_3to5d:
+    description: "Early warning for 2% decline in 3-5 days"
+    type: "binary"
+    lookforward_days: [3, 4, 5]
+    threshold: 0.02
+    direction: "down"
+    early_warning: true
+    
+  early_warning_4pct_30d:
+    description: "Early warning for 4% decline within 30 days"
+    type: "binary"
+    lookforward_days: 30
+    threshold: 0.04
+    direction: "down"
+    early_warning: true
+    
+  mean_reversion:
+    description: "Mean reversion signal"
+    type: "binary"
+    lookforward_days: 10
+    mean_reversion: true
+    
+  crash_detection:
+    description: "Market crash detection (>10% decline)"
+    type: "binary"
+    lookforward_days: 30
+    threshold: 0.10
+    direction: "down"
+    severity: "high"

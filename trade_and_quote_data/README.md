@@ -1,25 +1,34 @@
-# 🎯 SPY Early Warning System
+# 🎯 Trade and Quote Data Analysis System
 
-**A production-ready system for predicting SPY market corrections 7 days in advance.**
+**A unified system for market data analysis, feature engineering, and predictive modeling.**
 
-[![Status](https://img.shields.io/badge/status-operational-success)]()
-[![Tests](https://img.shields.io/badge/tests-5%2F5%20passing-success)]()
-[![Model](https://img.shields.io/badge/model-79%25%20accuracy-blue)]()
-[![Detection](https://img.shields.io/badge/2024%20events-3%2F3%20caught-success)]()
+[![Status](https://img.shields.io/badge/status-refactored-success)]()
+[![Structure](https://img.shields.io/badge/structure-unified-blue)]()
+[![Models](https://img.shields.io/badge/models-6%20targets-green)]()
+[![Features](https://img.shields.io/badge/features-modular-blue)]()
 
 ---
 
 ## 🚀 Quick Start
 
 ```bash
-# Test the system
-python3 test_new_architecture.py
+# Interactive menu
+python main.py
 
-# Run a prediction
-python3 daily_usage_example.py
+# Train optimal model
+python main.py --train-optimal
 
-# Train a model
-python3 scripts/train_model.py
+# Generate predictions  
+python main.py --predict
+
+# Download data
+python cli.py data download
+
+# Train specific model
+python training/train.py --target pullback_4pct_30d --features enhanced --model ensemble
+
+# Run analysis
+python analysis/analyze.py --type performance --model latest
 ```
 
 ---
@@ -43,11 +52,42 @@ python3 scripts/train_model.py
 
 ## 🏗️ Architecture
 
-### New Modular Design (100% Complete)
+### Unified System Structure (Post-Cleanup)
 
 ```
-📦 System Components
-├── 🎨 Features (18)      - Technical, Market, Currency, Volatility, Options
+📦 trade_and_quote_data/
+├── 🎯 Entry Points
+│   ├── main.py           # Interactive menu & quick start
+│   └── cli.py            # Full CLI interface
+├── 🏋️ Training
+│   ├── train.py          # Unified training system
+│   └── configs/          # Training configurations
+├── 📊 Analysis  
+│   ├── analyze.py        # Unified analysis system
+│   ├── reports/          # Analysis modules
+│   └── archive/          # Old analysis scripts
+├── 🎨 Features
+│   ├── technicals/       # Technical indicators
+│   ├── market/           # Market & sector features
+│   ├── currency/         # Currency features
+│   ├── volatility_indices/  # VIX features
+│   └── options/          # Options features
+├── 🤖 Models
+│   ├── trained/          # Saved models
+│   └── registry/         # Model definitions
+├── 💾 Data Management
+│   ├── unified_downloader.py  # Data download
+│   └── downloaders/      # Specialized downloaders
+├── ⚙️ Configuration
+│   ├── data_sources.yaml
+│   ├── features.yaml
+│   ├── models.yaml
+│   └── trading.yaml
+└── 🗃️ Core Components
+    ├── data_loader.py
+    ├── features.py
+    ├── models.py
+    └── targets.py
 ├── ⚙️  Engines (9)        - Feature calculation orchestrators
 ├── 🎯 Targets (4)        - Prediction targets (early warning, mean reversion)
 ├── 📥 Downloaders (2)    - Modular data downloaders
