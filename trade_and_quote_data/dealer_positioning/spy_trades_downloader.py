@@ -304,8 +304,8 @@ class SPYTradesDownloader:
                     # Parse option details from tickers
                     spy_options_df = self._parse_option_details(spy_options_df)
                     
-                    # Add synthetic bid/ask for classification
-                    spy_options_df = self._add_synthetic_quotes(spy_options_df)
+                    # Fetch real bid/ask quotes for classification
+                    spy_options_df = self._fetch_real_quotes(spy_options_df)
                     
                     self.logger.info(f"✅ Parsed SPY options: {len(spy_options_df)} trades")
                     
@@ -369,29 +369,171 @@ class SPYTradesDownloader:
         
         return df
     
-    def _add_synthetic_quotes(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Add synthetic bid/ask quotes for trade classification"""
+    def _fetch_real_quotes(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Fetch real bid/ask quotes from Polygon API for trade classification"""
+        
+        self.logger.info(f"🔍 Fetching real quotes for {len(df):,} SPY options trades...")
+        
+        # Group trades by ticker for batch processing
+        ticker_groups = df.groupby('ticker')
+        enriched_trades = []
+        total_tickers = len(ticker_groups)
+        
+        for idx, (ticker, trades_group) in enumerate(ticker_groups, 1):
+            self.logger.info(f"   📊 Processing ticker {idx}/{total_tickers}: {ticker} ({len(trades_group)} trades)")
+            
+            # Get quotes for this ticker around trade times
+            quotes_data = self._fetch_quotes_for_ticker(ticker, trades_group)
+            
+            if quotes_data is not None and len(quotes_data) > 0:
+                # Merge quotes with trades using timestamp matching
+                enriched_group = self._merge_trades_with_quotes(trades_group, quotes_data)
+                enriched_trades.append(enriched_group)
+            else:
+                # Fallback to synthetic quotes if no real quotes available
+                self.logger.warning(f"   ⚠️  No quotes found for {ticker}, using synthetic quotes")
+                enriched_group = self._add_synthetic_quotes_fallback(trades_group)
+                enriched_trades.append(enriched_group)
+            
+            # Rate limiting
+            time.sleep(0.1)
+        
+        if enriched_trades:
+            result_df = pd.concat(enriched_trades, ignore_index=True)
+            self.logger.info(f"✅ Enriched {len(result_df):,} trades with real quotes")
+            return result_df
+        else:
+            self.logger.warning("⚠️  No quotes fetched, falling back to synthetic quotes for all trades")
+            return self._add_synthetic_quotes_fallback(df)
+    
+    def _fetch_quotes_for_ticker(self, ticker: str, trades_group: pd.DataFrame) -> pd.DataFrame:
+        """Fetch quotes for a specific ticker around trade timestamps"""
+        
+        try:
+            # Get time range for this ticker's trades
+            min_timestamp = trades_group['sip_timestamp'].min() if 'sip_timestamp' in trades_group.columns else trades_group['timestamp'].min()
+            max_timestamp = trades_group['sip_timestamp'].max() if 'sip_timestamp' in trades_group.columns else trades_group['timestamp'].max()
+            
+            # Convert to datetime
+            start_time = pd.to_datetime(min_timestamp, unit='ns') - pd.Timedelta(seconds=30)
+            end_time = pd.to_datetime(max_timestamp, unit='ns') + pd.Timedelta(seconds=30)
+            
+            # Format for API
+            start_str = start_time.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            end_str = end_time.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            
+            # Fetch quotes from Polygon API
+            quotes_url = f"{self.base_url}/v3/quotes/{ticker}"
+            params = {
+                'timestamp.gte': start_str,
+                'timestamp.lte': end_str,
+                'order': 'asc',
+                'limit': 50000,
+                'apikey': self.api_key
+            }
+            
+            response = requests.get(quotes_url, params=params, timeout=30)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                if 'results' in data and len(data['results']) > 0:
+                    quotes_df = pd.DataFrame(data['results'])
+                    
+                    # Standardize column names
+                    quotes_df = quotes_df.rename(columns={
+                        't': 'quote_timestamp',
+                        'b': 'bid',
+                        'a': 'ask',
+                        'bs': 'bid_size',
+                        'as': 'ask_size'
+                    })
+                    
+                    # Convert timestamp to nanoseconds
+                    quotes_df['quote_timestamp'] = pd.to_datetime(quotes_df['quote_timestamp'], unit='ns')
+                    
+                    return quotes_df
+                else:
+                    self.logger.warning(f"   ⚠️  No quotes in API response for {ticker}")
+                    return None
+            else:
+                self.logger.error(f"   ❌ API error for {ticker}: {response.status_code}")
+                return None
+                
+        except Exception as e:
+            self.logger.error(f"   ❌ Error fetching quotes for {ticker}: {e}")
+            return None
+    
+    def _merge_trades_with_quotes(self, trades_group: pd.DataFrame, quotes_df: pd.DataFrame) -> pd.DataFrame:
+        """Merge trades with quotes using timestamp matching"""
+        
+        try:
+            # Prepare trades data
+            trades_copy = trades_group.copy()
+            
+            # Use sip_timestamp if available, otherwise timestamp
+            timestamp_col = 'sip_timestamp' if 'sip_timestamp' in trades_copy.columns else 'timestamp'
+            trades_copy['trade_timestamp'] = pd.to_datetime(trades_copy[timestamp_col], unit='ns')
+            
+            # Sort both dataframes by timestamp
+            trades_copy = trades_copy.sort_values('trade_timestamp')
+            quotes_df = quotes_df.sort_values('quote_timestamp')
+            
+            # Use merge_asof for timestamp-based matching (finds closest quote <= trade time)
+            merged = pd.merge_asof(
+                trades_copy,
+                quotes_df[['quote_timestamp', 'bid', 'ask', 'bid_size', 'ask_size']],
+                left_on='trade_timestamp',
+                right_on='quote_timestamp',
+                direction='nearest',
+                tolerance=pd.Timedelta(seconds=5)  # Maximum 5 second tolerance
+            )
+            
+            # Calculate time difference
+            merged['time_diff_seconds'] = (merged['trade_timestamp'] - merged['quote_timestamp']).dt.total_seconds().abs()
+            
+            # Remove temporary timestamp columns
+            merged = merged.drop(['trade_timestamp'], axis=1)
+            
+            # Fill missing quotes with synthetic data
+            missing_quotes = merged[['bid', 'ask']].isna().any(axis=1)
+            if missing_quotes.any():
+                self.logger.info(f"   📊 Filling {missing_quotes.sum()} missing quotes with synthetic data")
+                synthetic_data = self._add_synthetic_quotes_fallback(merged[missing_quotes])
+                merged.loc[missing_quotes, ['bid', 'ask', 'bid_size', 'ask_size', 'time_diff_seconds']] = \
+                    synthetic_data[['bid', 'ask', 'bid_size', 'ask_size', 'time_diff_seconds']].values
+            
+            return merged
+            
+        except Exception as e:
+            self.logger.error(f"   ❌ Error merging trades with quotes: {e}")
+            return self._add_synthetic_quotes_fallback(trades_group)
+    
+    def _add_synthetic_quotes_fallback(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Add synthetic bid/ask quotes as fallback when real quotes unavailable"""
+        
+        df_copy = df.copy()
         
         # Estimate bid/ask spread based on option price
-        df['spread_estimate'] = np.where(
-            df['price'] > 10, df['price'] * 0.05,  # 5% spread for expensive options
+        df_copy['spread_estimate'] = np.where(
+            df_copy['price'] > 10, df_copy['price'] * 0.05,  # 5% spread for expensive options
             np.where(
-                df['price'] > 1, df['price'] * 0.10,  # 10% spread for mid-price options
-                np.maximum(0.01, df['price'] * 0.20)  # 20% spread for cheap options, min $0.01
+                df_copy['price'] > 1, df_copy['price'] * 0.10,  # 10% spread for mid-price options
+                np.maximum(0.01, df_copy['price'] * 0.20)  # 20% spread for cheap options, min $0.01
             )
         )
         
         # Create synthetic bid/ask
-        df['bid'] = np.maximum(0.01, df['price'] - df['spread_estimate'] / 2)
-        df['ask'] = df['price'] + df['spread_estimate'] / 2
+        df_copy['bid'] = np.maximum(0.01, df_copy['price'] - df_copy['spread_estimate'] / 2)
+        df_copy['ask'] = df_copy['price'] + df_copy['spread_estimate'] / 2
         
         # Add quote metadata
-        df['bid_size'] = np.random.randint(1, 50, size=len(df))
-        df['ask_size'] = np.random.randint(1, 50, size=len(df))
-        df['quote_timestamp'] = df['sip_timestamp'] if 'sip_timestamp' in df.columns else df['timestamp']
-        df['time_diff_seconds'] = 0.0  # Synthetic quotes are "instant"
+        df_copy['bid_size'] = np.random.randint(1, 50, size=len(df_copy))
+        df_copy['ask_size'] = np.random.randint(1, 50, size=len(df_copy))
+        df_copy['quote_timestamp'] = df_copy['sip_timestamp'] if 'sip_timestamp' in df_copy.columns else df_copy['timestamp']
+        df_copy['time_diff_seconds'] = 0.0  # Synthetic quotes are "instant"
         
-        return df
+        return df_copy
     
     def download_trades(self, date: str, expiry_range: List[str], current_price: float = 669.21) -> pd.DataFrame:
         """Main method to download SPY trades using flat files"""

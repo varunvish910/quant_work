@@ -304,7 +304,7 @@ class DealerPositioningVisualizer:
         # Calculate moneyness and average IV by strike
         smile_data = trade_greeks_df.groupby('strike').agg({
             'implied_vol': 'mean',
-            'trade_size': 'sum'
+            'volume': 'sum'
         }).reset_index()
         
         smile_data['moneyness'] = smile_data['strike'] / self.spot_price
@@ -320,7 +320,7 @@ class DealerPositioningVisualizer:
             y=smile_data['implied_vol'] * 100,
             mode='markers',
             marker=dict(
-                size=smile_data['trade_size'] / smile_data['trade_size'].max() * 15 + 3,
+                size=smile_data['volume'] / smile_data['volume'].max() * 15 + 3,
                 color=smile_data['implied_vol'],
                 colorscale='Viridis',
                 opacity=0.7,
