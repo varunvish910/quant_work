@@ -1,3 +1,6 @@
+# Worktree directories
+*-worktree/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -88,12 +91,12 @@ backup/
 
 # Cache directories
 cache/
-__pycache__/
 
 # macOS
 .DS_Store
 .AppleDouble
 .LSOverride
+Thumbs.db
 
 # API keys and secrets
 .env.local
@@ -124,8 +127,3 @@ htmlcov/
 *.tar.gz
 *.rar
 *.7z
-
-# IDE and editor files
-*.swp
-*.swo
-*~
